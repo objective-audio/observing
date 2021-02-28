@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <chaining/yas_observing_caller.h>
+#include <observing/yas_observing_caller.h>
 
 #include <vector>
 
@@ -66,4 +66,4 @@ struct holder final {
 };
 }  // namespace yas::observing::vector
 
-#include <chaining/yas_observing_vector_holder_private.h>
+#include <observing/yas_observing_vector_holder_private.h>

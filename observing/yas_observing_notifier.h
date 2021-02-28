@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <chaining/yas_observing_caller.h>
+#include <observing/yas_observing_caller.h>
 
 namespace yas::observing {
 template <typename T>
@@ -28,4 +28,4 @@ struct notifier final {
 };
 }  // namespace yas::observing
 
-#include <chaining/yas_observing_notifier_private.h>
+#include <observing/yas_observing_notifier_private.h>

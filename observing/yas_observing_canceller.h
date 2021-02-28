@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <chaining/yas_observing_cancellable.h>
+#include <observing/yas_observing_cancellable.h>
 
 #include <cstdint>
 #include <functional>

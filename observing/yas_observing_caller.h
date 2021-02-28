@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <chaining/yas_observing_canceller.h>
+#include <observing/yas_observing_canceller.h>
 
 #include <map>
 #include <vector>
@@ -32,4 +32,4 @@ struct caller {
 };
 }  // namespace yas::observing
 
-#include <chaining/yas_observing_caller_private.h>
+#include <observing/yas_observing_caller_private.h>

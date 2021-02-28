@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <chaining/yas_observing_caller.h>
+#include <observing/yas_observing_caller.h>
 
 #include <map>
 
@@ -62,4 +62,4 @@ struct holder final {
 };
 }  // namespace yas::observing::map
 
-#include <chaining/yas_observing_map_holder_private.h>
+#include <observing/yas_observing_map_holder_private.h>

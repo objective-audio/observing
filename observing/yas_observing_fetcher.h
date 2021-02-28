@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <chaining/yas_observing_caller.h>
+#include <observing/yas_observing_caller.h>
 
 namespace yas::observing {
 template <typename T>
@@ -32,4 +32,4 @@ struct fetcher final {
 };
 }  // namespace yas::observing
 
-#include <chaining/yas_observing_fetcher_private.h>
+#include <observing/yas_observing_fetcher_private.h>

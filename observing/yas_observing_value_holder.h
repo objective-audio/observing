@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <chaining/yas_observing_caller.h>
+#include <observing/yas_observing_caller.h>
 
 namespace yas::observing::value {
 template <typename T>
@@ -33,4 +33,4 @@ struct holder final {
 };
 }  // namespace yas::observing::value
 
-#include <chaining/yas_observing_value_holder_private.h>
+#include <observing/yas_observing_value_holder_private.h>
