@@ -8,12 +8,48 @@
 
 /* Begin PBXBuildFile section */
 		B69346D325EB701800B40CA7 /* observing.h in Headers */ = {isa = PBXBuildFile; fileRef = B69346D125EB701800B40CA7 /* observing.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B69346FA25EB70B800B40CA7 /* yas_observing_canceller.h in Headers */ = {isa = PBXBuildFile; fileRef = B69346E825EB70B800B40CA7 /* yas_observing_canceller.h */; };
+		B69346FB25EB70B800B40CA7 /* yas_observing_caller.h in Headers */ = {isa = PBXBuildFile; fileRef = B69346E925EB70B800B40CA7 /* yas_observing_caller.h */; };
+		B69346FC25EB70B800B40CA7 /* yas_observing_map_holder_private.h in Headers */ = {isa = PBXBuildFile; fileRef = B69346EA25EB70B800B40CA7 /* yas_observing_map_holder_private.h */; };
+		B69346FD25EB70B800B40CA7 /* yas_observing_canceller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B69346EB25EB70B800B40CA7 /* yas_observing_canceller.cpp */; };
+		B69346FE25EB70B800B40CA7 /* yas_observing_value_holder.h in Headers */ = {isa = PBXBuildFile; fileRef = B69346EC25EB70B800B40CA7 /* yas_observing_value_holder.h */; };
+		B69346FF25EB70B800B40CA7 /* yas_observing_caller_private.h in Headers */ = {isa = PBXBuildFile; fileRef = B69346ED25EB70B800B40CA7 /* yas_observing_caller_private.h */; };
+		B693470025EB70B800B40CA7 /* yas_observing_vector_holder.h in Headers */ = {isa = PBXBuildFile; fileRef = B69346EE25EB70B800B40CA7 /* yas_observing_vector_holder.h */; };
+		B693470125EB70B800B40CA7 /* yas_observing_notifier.h in Headers */ = {isa = PBXBuildFile; fileRef = B69346EF25EB70B800B40CA7 /* yas_observing_notifier.h */; };
+		B693470225EB70B800B40CA7 /* yas_observing_value_holder_private.h in Headers */ = {isa = PBXBuildFile; fileRef = B69346F025EB70B800B40CA7 /* yas_observing_value_holder_private.h */; };
+		B693470325EB70B800B40CA7 /* yas_observing_fetcher_private.h in Headers */ = {isa = PBXBuildFile; fileRef = B69346F125EB70B800B40CA7 /* yas_observing_fetcher_private.h */; };
+		B693470425EB70B800B40CA7 /* yas_observing_canceller_pool.h in Headers */ = {isa = PBXBuildFile; fileRef = B69346F225EB70B800B40CA7 /* yas_observing_canceller_pool.h */; };
+		B693470525EB70B800B40CA7 /* yas_observing_umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = B69346F325EB70B800B40CA7 /* yas_observing_umbrella.h */; };
+		B693470625EB70B800B40CA7 /* yas_observing_cancellable.h in Headers */ = {isa = PBXBuildFile; fileRef = B69346F425EB70B800B40CA7 /* yas_observing_cancellable.h */; };
+		B693470725EB70B800B40CA7 /* yas_observing_map_holder.h in Headers */ = {isa = PBXBuildFile; fileRef = B69346F525EB70B800B40CA7 /* yas_observing_map_holder.h */; };
+		B693470825EB70B800B40CA7 /* yas_observing_canceller_pool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B69346F625EB70B800B40CA7 /* yas_observing_canceller_pool.cpp */; };
+		B693470925EB70B800B40CA7 /* yas_observing_fetcher.h in Headers */ = {isa = PBXBuildFile; fileRef = B69346F725EB70B800B40CA7 /* yas_observing_fetcher.h */; };
+		B693470A25EB70B800B40CA7 /* yas_observing_vector_holder_private.h in Headers */ = {isa = PBXBuildFile; fileRef = B69346F825EB70B800B40CA7 /* yas_observing_vector_holder_private.h */; };
+		B693470B25EB70B800B40CA7 /* yas_observing_notifier_private.h in Headers */ = {isa = PBXBuildFile; fileRef = B69346F925EB70B800B40CA7 /* yas_observing_notifier_private.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		B69346CE25EB701800B40CA7 /* observing.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = observing.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B69346D125EB701800B40CA7 /* observing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = observing.h; sourceTree = "<group>"; };
 		B69346D225EB701800B40CA7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B69346E825EB70B800B40CA7 /* yas_observing_canceller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yas_observing_canceller.h; sourceTree = "<group>"; };
+		B69346E925EB70B800B40CA7 /* yas_observing_caller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yas_observing_caller.h; sourceTree = "<group>"; };
+		B69346EA25EB70B800B40CA7 /* yas_observing_map_holder_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yas_observing_map_holder_private.h; sourceTree = "<group>"; };
+		B69346EB25EB70B800B40CA7 /* yas_observing_canceller.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = yas_observing_canceller.cpp; sourceTree = "<group>"; };
+		B69346EC25EB70B800B40CA7 /* yas_observing_value_holder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yas_observing_value_holder.h; sourceTree = "<group>"; };
+		B69346ED25EB70B800B40CA7 /* yas_observing_caller_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yas_observing_caller_private.h; sourceTree = "<group>"; };
+		B69346EE25EB70B800B40CA7 /* yas_observing_vector_holder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yas_observing_vector_holder.h; sourceTree = "<group>"; };
+		B69346EF25EB70B800B40CA7 /* yas_observing_notifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yas_observing_notifier.h; sourceTree = "<group>"; };
+		B69346F025EB70B800B40CA7 /* yas_observing_value_holder_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yas_observing_value_holder_private.h; sourceTree = "<group>"; };
+		B69346F125EB70B800B40CA7 /* yas_observing_fetcher_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yas_observing_fetcher_private.h; sourceTree = "<group>"; };
+		B69346F225EB70B800B40CA7 /* yas_observing_canceller_pool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yas_observing_canceller_pool.h; sourceTree = "<group>"; };
+		B69346F325EB70B800B40CA7 /* yas_observing_umbrella.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yas_observing_umbrella.h; sourceTree = "<group>"; };
+		B69346F425EB70B800B40CA7 /* yas_observing_cancellable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yas_observing_cancellable.h; sourceTree = "<group>"; };
+		B69346F525EB70B800B40CA7 /* yas_observing_map_holder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yas_observing_map_holder.h; sourceTree = "<group>"; };
+		B69346F625EB70B800B40CA7 /* yas_observing_canceller_pool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = yas_observing_canceller_pool.cpp; sourceTree = "<group>"; };
+		B69346F725EB70B800B40CA7 /* yas_observing_fetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yas_observing_fetcher.h; sourceTree = "<group>"; };
+		B69346F825EB70B800B40CA7 /* yas_observing_vector_holder_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yas_observing_vector_holder_private.h; sourceTree = "<group>"; };
+		B69346F925EB70B800B40CA7 /* yas_observing_notifier_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yas_observing_notifier_private.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,10 +82,37 @@
 		B69346D025EB701800B40CA7 /* observing */ = {
 			isa = PBXGroup;
 			children = (
+				B69346E725EB70B800B40CA7 /* observing */,
 				B69346D125EB701800B40CA7 /* observing.h */,
 				B69346D225EB701800B40CA7 /* Info.plist */,
 			);
 			path = observing;
+			sourceTree = "<group>";
+		};
+		B69346E725EB70B800B40CA7 /* observing */ = {
+			isa = PBXGroup;
+			children = (
+				B69346ED25EB70B800B40CA7 /* yas_observing_caller_private.h */,
+				B69346E925EB70B800B40CA7 /* yas_observing_caller.h */,
+				B69346F425EB70B800B40CA7 /* yas_observing_cancellable.h */,
+				B69346F625EB70B800B40CA7 /* yas_observing_canceller_pool.cpp */,
+				B69346F225EB70B800B40CA7 /* yas_observing_canceller_pool.h */,
+				B69346EB25EB70B800B40CA7 /* yas_observing_canceller.cpp */,
+				B69346E825EB70B800B40CA7 /* yas_observing_canceller.h */,
+				B69346F125EB70B800B40CA7 /* yas_observing_fetcher_private.h */,
+				B69346F725EB70B800B40CA7 /* yas_observing_fetcher.h */,
+				B69346EA25EB70B800B40CA7 /* yas_observing_map_holder_private.h */,
+				B69346F525EB70B800B40CA7 /* yas_observing_map_holder.h */,
+				B69346F925EB70B800B40CA7 /* yas_observing_notifier_private.h */,
+				B69346EF25EB70B800B40CA7 /* yas_observing_notifier.h */,
+				B69346F325EB70B800B40CA7 /* yas_observing_umbrella.h */,
+				B69346F025EB70B800B40CA7 /* yas_observing_value_holder_private.h */,
+				B69346EC25EB70B800B40CA7 /* yas_observing_value_holder.h */,
+				B69346F825EB70B800B40CA7 /* yas_observing_vector_holder_private.h */,
+				B69346EE25EB70B800B40CA7 /* yas_observing_vector_holder.h */,
+			);
+			name = observing;
+			path = ../../observing;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -59,7 +122,23 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B693470125EB70B800B40CA7 /* yas_observing_notifier.h in Headers */,
+				B693470425EB70B800B40CA7 /* yas_observing_canceller_pool.h in Headers */,
+				B693470225EB70B800B40CA7 /* yas_observing_value_holder_private.h in Headers */,
+				B693470325EB70B800B40CA7 /* yas_observing_fetcher_private.h in Headers */,
+				B693470525EB70B800B40CA7 /* yas_observing_umbrella.h in Headers */,
+				B69346FA25EB70B800B40CA7 /* yas_observing_canceller.h in Headers */,
+				B693470925EB70B800B40CA7 /* yas_observing_fetcher.h in Headers */,
+				B69346FF25EB70B800B40CA7 /* yas_observing_caller_private.h in Headers */,
+				B69346FE25EB70B800B40CA7 /* yas_observing_value_holder.h in Headers */,
+				B69346FB25EB70B800B40CA7 /* yas_observing_caller.h in Headers */,
+				B693470B25EB70B800B40CA7 /* yas_observing_notifier_private.h in Headers */,
+				B693470725EB70B800B40CA7 /* yas_observing_map_holder.h in Headers */,
+				B693470025EB70B800B40CA7 /* yas_observing_vector_holder.h in Headers */,
 				B69346D325EB701800B40CA7 /* observing.h in Headers */,
+				B69346FC25EB70B800B40CA7 /* yas_observing_map_holder_private.h in Headers */,
+				B693470625EB70B800B40CA7 /* yas_observing_cancellable.h in Headers */,
+				B693470A25EB70B800B40CA7 /* yas_observing_vector_holder_private.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,6 +209,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B693470825EB70B800B40CA7 /* yas_observing_canceller_pool.cpp in Sources */,
+				B69346FD25EB70B800B40CA7 /* yas_observing_canceller.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -154,7 +235,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -233,7 +314,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
