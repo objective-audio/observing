@@ -2,6 +2,15 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:observing_ios_tests/observing_ios_tests.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:observing_ios/observing_ios.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:submodules/cpp_utils/cpp_utils_ios/cpp_utils_ios.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:submodules/objc_utils/objc_utils_ios/objc_utils_ios.xcodeproj">
    </FileRef>
 </Workspace>
