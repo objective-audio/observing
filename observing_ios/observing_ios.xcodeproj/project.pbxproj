@@ -8,24 +8,24 @@
 
 /* Begin PBXBuildFile section */
 		B69346E225EB704C00B40CA7 /* observing.h in Headers */ = {isa = PBXBuildFile; fileRef = B69346E025EB704C00B40CA7 /* observing.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B693472125EB711500B40CA7 /* yas_observing_canceller.h in Headers */ = {isa = PBXBuildFile; fileRef = B693470F25EB711500B40CA7 /* yas_observing_canceller.h */; };
-		B693472225EB711500B40CA7 /* yas_observing_caller.h in Headers */ = {isa = PBXBuildFile; fileRef = B693471025EB711500B40CA7 /* yas_observing_caller.h */; };
-		B693472325EB711500B40CA7 /* yas_observing_map_holder_private.h in Headers */ = {isa = PBXBuildFile; fileRef = B693471125EB711500B40CA7 /* yas_observing_map_holder_private.h */; };
+		B693472125EB711500B40CA7 /* yas_observing_canceller.h in Headers */ = {isa = PBXBuildFile; fileRef = B693470F25EB711500B40CA7 /* yas_observing_canceller.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B693472225EB711500B40CA7 /* yas_observing_caller.h in Headers */ = {isa = PBXBuildFile; fileRef = B693471025EB711500B40CA7 /* yas_observing_caller.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B693472325EB711500B40CA7 /* yas_observing_map_holder_private.h in Headers */ = {isa = PBXBuildFile; fileRef = B693471125EB711500B40CA7 /* yas_observing_map_holder_private.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B693472425EB711500B40CA7 /* yas_observing_canceller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B693471225EB711500B40CA7 /* yas_observing_canceller.cpp */; };
-		B693472525EB711500B40CA7 /* yas_observing_value_holder.h in Headers */ = {isa = PBXBuildFile; fileRef = B693471325EB711500B40CA7 /* yas_observing_value_holder.h */; };
-		B693472625EB711500B40CA7 /* yas_observing_caller_private.h in Headers */ = {isa = PBXBuildFile; fileRef = B693471425EB711500B40CA7 /* yas_observing_caller_private.h */; };
-		B693472725EB711500B40CA7 /* yas_observing_vector_holder.h in Headers */ = {isa = PBXBuildFile; fileRef = B693471525EB711500B40CA7 /* yas_observing_vector_holder.h */; };
-		B693472825EB711500B40CA7 /* yas_observing_notifier.h in Headers */ = {isa = PBXBuildFile; fileRef = B693471625EB711500B40CA7 /* yas_observing_notifier.h */; };
-		B693472925EB711500B40CA7 /* yas_observing_value_holder_private.h in Headers */ = {isa = PBXBuildFile; fileRef = B693471725EB711500B40CA7 /* yas_observing_value_holder_private.h */; };
-		B693472A25EB711500B40CA7 /* yas_observing_fetcher_private.h in Headers */ = {isa = PBXBuildFile; fileRef = B693471825EB711500B40CA7 /* yas_observing_fetcher_private.h */; };
-		B693472B25EB711500B40CA7 /* yas_observing_canceller_pool.h in Headers */ = {isa = PBXBuildFile; fileRef = B693471925EB711500B40CA7 /* yas_observing_canceller_pool.h */; };
-		B693472C25EB711500B40CA7 /* yas_observing_umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = B693471A25EB711500B40CA7 /* yas_observing_umbrella.h */; };
-		B693472D25EB711500B40CA7 /* yas_observing_cancellable.h in Headers */ = {isa = PBXBuildFile; fileRef = B693471B25EB711500B40CA7 /* yas_observing_cancellable.h */; };
-		B693472E25EB711500B40CA7 /* yas_observing_map_holder.h in Headers */ = {isa = PBXBuildFile; fileRef = B693471C25EB711500B40CA7 /* yas_observing_map_holder.h */; };
+		B693472525EB711500B40CA7 /* yas_observing_value_holder.h in Headers */ = {isa = PBXBuildFile; fileRef = B693471325EB711500B40CA7 /* yas_observing_value_holder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B693472625EB711500B40CA7 /* yas_observing_caller_private.h in Headers */ = {isa = PBXBuildFile; fileRef = B693471425EB711500B40CA7 /* yas_observing_caller_private.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B693472725EB711500B40CA7 /* yas_observing_vector_holder.h in Headers */ = {isa = PBXBuildFile; fileRef = B693471525EB711500B40CA7 /* yas_observing_vector_holder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B693472825EB711500B40CA7 /* yas_observing_notifier.h in Headers */ = {isa = PBXBuildFile; fileRef = B693471625EB711500B40CA7 /* yas_observing_notifier.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B693472925EB711500B40CA7 /* yas_observing_value_holder_private.h in Headers */ = {isa = PBXBuildFile; fileRef = B693471725EB711500B40CA7 /* yas_observing_value_holder_private.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B693472A25EB711500B40CA7 /* yas_observing_fetcher_private.h in Headers */ = {isa = PBXBuildFile; fileRef = B693471825EB711500B40CA7 /* yas_observing_fetcher_private.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B693472B25EB711500B40CA7 /* yas_observing_canceller_pool.h in Headers */ = {isa = PBXBuildFile; fileRef = B693471925EB711500B40CA7 /* yas_observing_canceller_pool.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B693472C25EB711500B40CA7 /* yas_observing_umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = B693471A25EB711500B40CA7 /* yas_observing_umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B693472D25EB711500B40CA7 /* yas_observing_cancellable.h in Headers */ = {isa = PBXBuildFile; fileRef = B693471B25EB711500B40CA7 /* yas_observing_cancellable.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B693472E25EB711500B40CA7 /* yas_observing_map_holder.h in Headers */ = {isa = PBXBuildFile; fileRef = B693471C25EB711500B40CA7 /* yas_observing_map_holder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B693472F25EB711500B40CA7 /* yas_observing_canceller_pool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B693471D25EB711500B40CA7 /* yas_observing_canceller_pool.cpp */; };
-		B693473025EB711500B40CA7 /* yas_observing_fetcher.h in Headers */ = {isa = PBXBuildFile; fileRef = B693471E25EB711500B40CA7 /* yas_observing_fetcher.h */; };
-		B693473125EB711500B40CA7 /* yas_observing_vector_holder_private.h in Headers */ = {isa = PBXBuildFile; fileRef = B693471F25EB711500B40CA7 /* yas_observing_vector_holder_private.h */; };
-		B693473225EB711500B40CA7 /* yas_observing_notifier_private.h in Headers */ = {isa = PBXBuildFile; fileRef = B693472025EB711500B40CA7 /* yas_observing_notifier_private.h */; };
+		B693473025EB711500B40CA7 /* yas_observing_fetcher.h in Headers */ = {isa = PBXBuildFile; fileRef = B693471E25EB711500B40CA7 /* yas_observing_fetcher.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B693473125EB711500B40CA7 /* yas_observing_vector_holder_private.h in Headers */ = {isa = PBXBuildFile; fileRef = B693471F25EB711500B40CA7 /* yas_observing_vector_holder_private.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B693473225EB711500B40CA7 /* yas_observing_notifier_private.h in Headers */ = {isa = PBXBuildFile; fileRef = B693472025EB711500B40CA7 /* yas_observing_notifier_private.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -135,10 +135,10 @@
 				B693473225EB711500B40CA7 /* yas_observing_notifier_private.h in Headers */,
 				B693472E25EB711500B40CA7 /* yas_observing_map_holder.h in Headers */,
 				B693472725EB711500B40CA7 /* yas_observing_vector_holder.h in Headers */,
-				B69346E225EB704C00B40CA7 /* observing.h in Headers */,
 				B693472325EB711500B40CA7 /* yas_observing_map_holder_private.h in Headers */,
 				B693472D25EB711500B40CA7 /* yas_observing_cancellable.h in Headers */,
 				B693473125EB711500B40CA7 /* yas_observing_vector_holder_private.h in Headers */,
+				B69346E225EB704C00B40CA7 /* observing.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
