@@ -28,7 +28,7 @@ struct holder final {
         event_type type;
         std::map<Key, Element> const &elements;
         Element const *element = nullptr;
-        Key const *key = nullptr;
+        std::optional<Key> key = std::nullopt;
     };
 
     [[nodiscard]] std::map<Key, Element> const &elements() const;
@@ -56,9 +56,9 @@ struct holder final {
     holder(std::map<Key, Element> &&);
 
     void _call_any();
-    void _call_replaced(Key const *);
-    void _call_inserted(Key const *);
-    void _call_erased(Element const *, Key const *);
+    void _call_replaced(std::optional<Key> const &);
+    void _call_inserted(std::optional<Key> const &);
+    void _call_erased(Element const *, std::optional<Key> const &);
 };
 }  // namespace yas::observing::map
 
