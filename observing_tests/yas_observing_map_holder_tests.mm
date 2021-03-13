@@ -126,10 +126,9 @@ using namespace yas::observing;
 
     auto canceller = holder->observe(
         [&called](auto const &event) {
-            std::optional<int> key = event.key ? std::optional<int>{*event.key} : std::nullopt;
             std::optional<std::string> element =
                 event.element ? std::optional<std::string>{*event.element} : std::nullopt;
-            called.emplace_back(called_event{.type = event.type, .key = std::move(key), .element = std::move(element)});
+            called.emplace_back(called_event{.type = event.type, .key = event.key, .element = std::move(element)});
         },
         true);
 
