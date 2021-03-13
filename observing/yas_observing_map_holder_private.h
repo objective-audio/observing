@@ -59,9 +59,9 @@ void holder<Key, Element>::insert_or_replace(Key const &key, Element const &elem
     this->_raw.emplace(key, element);
 
     if (replaced) {
-        this->_call_replaced(&key);
+        this->_call_replaced(key);
     } else {
-        this->_call_inserted(&key);
+        this->_call_inserted(key);
     }
 }
 
@@ -72,7 +72,7 @@ std::map<Key, Element> holder<Key, Element>::erase(Key const &key) {
     if (this->_raw.count(key) > 0) {
         erased.emplace(key, std::move(this->_raw.at(key)));
         this->_raw.erase(key);
-        this->_call_erased(&erased.at(key), &key);
+        this->_call_erased(&erased.at(key), key);
     }
 
     return erased;
@@ -115,19 +115,19 @@ void holder<Key, Element>::_call_any() {
 }
 
 template <typename Key, typename Element>
-void holder<Key, Element>::_call_replaced(Key const *key) {
+void holder<Key, Element>::_call_replaced(std::optional<Key> const &key) {
     this->_caller.call(
         event{.type = event_type::replaced, .elements = this->_raw, .element = &this->_raw.at(*key), .key = key});
 }
 
 template <typename Key, typename Element>
-void holder<Key, Element>::_call_inserted(Key const *key) {
+void holder<Key, Element>::_call_inserted(std::optional<Key> const &key) {
     this->_caller.call(
         event{.type = event_type::inserted, .elements = this->_raw, .element = &this->_raw.at(*key), .key = key});
 }
 
 template <typename Key, typename Element>
-void holder<Key, Element>::_call_erased(Element const *element, Key const *key) {
+void holder<Key, Element>::_call_erased(Element const *element, std::optional<Key> const &key) {
     this->_caller.call(event{.type = event_type::erased, .elements = this->_raw, .element = element, .key = key});
 }
 }  // namespace yas::observing::map
