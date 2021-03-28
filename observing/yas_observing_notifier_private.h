@@ -15,8 +15,8 @@ void notifier<T>::notify(T const &value) {
 }
 
 template <typename T>
-canceller_ptr notifier<T>::observe(typename caller<T>::handler_f &&handler) {
-    return this->_caller.add(std::move(handler));
+endable notifier<T>::observe(typename caller<T>::handler_f &&handler) {
+    return endable{[canceller = this->_caller.add(std::move(handler))] { return canceller; }};
 }
 
 template <typename T>

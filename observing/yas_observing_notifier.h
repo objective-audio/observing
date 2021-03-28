@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <observing/yas_observing_caller.h>
+#include <observing/yas_observing_syncable.h>
 
 namespace yas::observing {
 template <typename T>
@@ -17,7 +17,7 @@ template <typename T>
 struct notifier final {
     void notify(T const &);
 
-    [[nodiscard]] canceller_ptr observe(typename caller<T>::handler_f &&);
+    [[nodiscard]] endable observe(typename caller<T>::handler_f &&);
 
     [[nodiscard]] static notifier_ptr<T> make_shared();
 

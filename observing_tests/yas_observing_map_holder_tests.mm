@@ -124,13 +124,14 @@ using namespace yas::observing;
 
     std::vector<called_event> called;
 
-    auto canceller = holder->observe(
-        [&called](auto const &event) {
-            std::optional<std::string> element =
-                event.element ? std::optional<std::string>{*event.element} : std::nullopt;
-            called.emplace_back(called_event{.type = event.type, .key = event.key, .element = std::move(element)});
-        },
-        true);
+    auto canceller =
+        holder
+            ->observe([&called](auto const &event) {
+                std::optional<std::string> element =
+                    event.element ? std::optional<std::string>{*event.element} : std::nullopt;
+                called.emplace_back(called_event{.type = event.type, .key = event.key, .element = std::move(element)});
+            })
+            .sync();
 
     XCTAssertEqual(called.size(), 1);
     XCTAssertEqual(called.at(0).type, map::event_type::any);

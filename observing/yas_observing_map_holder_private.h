@@ -87,11 +87,13 @@ void holder<Key, Element>::clear() {
 }
 
 template <typename Key, typename Element>
-canceller_ptr holder<Key, Element>::observe(typename caller<event>::handler_f &&handler, bool const sync) {
-    if (sync) {
-        handler(event{.type = event_type::any, .elements = this->_raw});
-    }
-    return this->_caller.add(std::move(handler));
+syncable holder<Key, Element>::observe(typename caller<event>::handler_f &&handler) {
+    return syncable{[this, handler = std::move(handler)](bool const sync) mutable {
+        if (sync) {
+            handler(event{.type = event_type::any, .elements = this->_raw});
+        }
+        return this->_caller.add(std::move(handler));
+    }};
 }
 
 template <typename Key, typename Element>

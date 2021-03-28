@@ -26,16 +26,18 @@ void holder<T>::set_value(T const &value) {
 }
 
 template <typename T>
-[[nodiscard]] T const &holder<T>::value() const {
+T const &holder<T>::value() const {
     return this->_value;
 }
 
 template <typename T>
-[[nodiscard]] canceller_ptr holder<T>::observe(typename caller<T>::handler_f &&handler, bool const sync) {
-    if (sync) {
-        handler(this->_value);
-    }
-    return this->_caller.add(std::move(handler));
+syncable holder<T>::observe(typename caller<T>::handler_f &&handler) {
+    return syncable{[this, handler = std::move(handler)](bool const sync) mutable {
+        if (sync) {
+            handler(this->_value);
+        }
+        return this->_caller.add(std::move(handler));
+    }};
 }
 
 template <typename T>

@@ -22,7 +22,7 @@ using namespace yas::observing;
     {
         canceller_pool pool;
 
-        notifier->observe([&called](int const &value) { called.emplace_back(value); })->add_to(pool);
+        notifier->observe([&called](int const &value) { called.emplace_back(value); }).end()->add_to(pool);
 
         XCTAssertEqual(called.size(), 0);
 
@@ -44,7 +44,7 @@ using namespace yas::observing;
 
     canceller_pool pool;
 
-    notifier->observe([&called](int const &value) { called.emplace_back(value); })->add_to(pool);
+    notifier->observe([&called](int const &value) { called.emplace_back(value); }).end()->add_to(pool);
 
     XCTAssertEqual(called.size(), 0);
 
@@ -67,7 +67,7 @@ using namespace yas::observing;
 
     auto pool1 = canceller_pool::make_shared();
 
-    notifier->observe([&called](int const &value) { called.emplace_back(value); })->add_to(*pool1);
+    notifier->observe([&called](int const &value) { called.emplace_back(value); }).end()->add_to(*pool1);
 
     canceller_pool pool2;
 
@@ -95,7 +95,7 @@ using namespace yas::observing;
     auto pool1 = canceller_pool::make_shared();
     canceller_pool pool2;
 
-    notifier->observe([&called](int const &value) { called.emplace_back(value); })->add_to(*pool1);
+    notifier->observe([&called](int const &value) { called.emplace_back(value); }).end()->add_to(*pool1);
 
     pool1->add_to(pool2);
 
@@ -121,7 +121,7 @@ using namespace yas::observing;
     auto pool = canceller_pool::make_shared();
     cancellable_ptr canceller = nullptr;
 
-    notifier->observe([&called](int const &value) { called.emplace_back(value); })->add_to(*pool);
+    notifier->observe([&called](int const &value) { called.emplace_back(value); }).end()->add_to(*pool);
 
     pool->set_to(canceller);
 
@@ -146,13 +146,13 @@ using namespace yas::observing;
 
     XCTAssertFalse(pool.has_cancellable());
 
-    auto canceller1 = notifier->observe([](int const &) {});
+    auto canceller1 = notifier->observe([](int const &) {}).end();
 
     pool.add_canceller(canceller1);
 
     XCTAssertTrue(pool.has_cancellable());
 
-    auto canceller2 = notifier->observe([](int const &) {});
+    auto canceller2 = notifier->observe([](int const &) {}).end();
 
     pool.add_canceller(canceller2);
 
@@ -166,7 +166,7 @@ using namespace yas::observing;
 
     XCTAssertFalse(pool.has_cancellable());
 
-    notifier->observe([](int const &) {})->add_to(pool);
+    notifier->observe([](int const &) {}).end()->add_to(pool);
 
     XCTAssertTrue(pool.has_cancellable());
 

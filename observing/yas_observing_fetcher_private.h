@@ -27,13 +27,15 @@ void fetcher<T>::push(T const &value) {
 }
 
 template <typename T>
-canceller_ptr fetcher<T>::observe(typename caller<T>::handler_f &&handler, bool const sync) {
-    if (sync) {
-        if (auto const fetched = this->fetched_value(); fetched.has_value()) {
-            handler(fetched.value());
+syncable fetcher<T>::observe(typename caller<T>::handler_f &&handler) {
+    return syncable{[this, handler = std::move(handler)](bool const sync) mutable {
+        if (sync) {
+            if (auto const fetched = this->fetched_value(); fetched.has_value()) {
+                handler(fetched.value());
+            }
         }
-    }
-    return this->_caller.add(std::move(handler));
+        return this->_caller.add(std::move(handler));
+    }};
 }
 
 template <typename T>
