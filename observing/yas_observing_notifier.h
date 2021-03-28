@@ -16,6 +16,7 @@ using notifier_ptr = std::shared_ptr<notifier<T>>;
 template <typename T>
 struct notifier final {
     void notify(T const &);
+    void notify();
 
     [[nodiscard]] endable observe(typename caller<T>::handler_f &&);
 

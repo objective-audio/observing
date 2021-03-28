@@ -42,4 +42,22 @@ using namespace yas::observing;
     XCTAssertEqual(called2.at(1), 2);
 }
 
+- (void)test_notify_null {
+    auto const notifier = observing::notifier<std::nullptr_t>::make_shared();
+
+    std::size_t called;
+
+    auto const canceller = notifier->observe([&called](auto const &) { called += 1; }).end();
+
+    XCTAssertEqual(called, 0);
+
+    notifier->notify(nullptr);
+
+    XCTAssertEqual(called, 1);
+
+    notifier->notify();
+
+    XCTAssertEqual(called, 2);
+}
+
 @end
