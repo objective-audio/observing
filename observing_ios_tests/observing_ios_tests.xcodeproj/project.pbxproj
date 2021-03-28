@@ -17,6 +17,7 @@
 		B65A940925EB9DF9001A899B /* yas_observing_invalidator_pool_tests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B65A940125EB9DF9001A899B /* yas_observing_invalidator_pool_tests.mm */; };
 		B65A940E25EB9E2B001A899B /* observing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B65A940D25EB9E2B001A899B /* observing.framework */; };
 		B65A941225EB9E5D001A899B /* cpp_utils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B65A941125EB9E5D001A899B /* cpp_utils.framework */; };
+		B6BB65632610846D003FB755 /* yas_observing_syncable_tests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6BB65622610846D003FB755 /* yas_observing_syncable_tests.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		B65A940125EB9DF9001A899B /* yas_observing_invalidator_pool_tests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = yas_observing_invalidator_pool_tests.mm; sourceTree = "<group>"; };
 		B65A940D25EB9E2B001A899B /* observing.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = observing.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B65A941125EB9E5D001A899B /* cpp_utils.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = cpp_utils.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B6BB65622610846D003FB755 /* yas_observing_syncable_tests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = yas_observing_syncable_tests.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,12 +71,13 @@
 			children = (
 				B65A93FA25EB9DF9001A899B /* yas_observing_caller_tests.mm */,
 				B65A93FB25EB9DF9001A899B /* yas_observing_canceller_tests.mm */,
-				B65A93FC25EB9DF9001A899B /* yas_observing_notifier_tests.mm */,
-				B65A93FD25EB9DF9001A899B /* yas_observing_vector_holder_tests.mm */,
 				B65A93FE25EB9DF9001A899B /* yas_observing_fetcher_tests.mm */,
-				B65A93FF25EB9DF9001A899B /* yas_observing_map_holder_tests.mm */,
-				B65A940025EB9DF9001A899B /* yas_observing_value_holder_tests.mm */,
 				B65A940125EB9DF9001A899B /* yas_observing_invalidator_pool_tests.mm */,
+				B65A93FF25EB9DF9001A899B /* yas_observing_map_holder_tests.mm */,
+				B65A93FC25EB9DF9001A899B /* yas_observing_notifier_tests.mm */,
+				B6BB65622610846D003FB755 /* yas_observing_syncable_tests.mm */,
+				B65A940025EB9DF9001A899B /* yas_observing_value_holder_tests.mm */,
+				B65A93FD25EB9DF9001A899B /* yas_observing_vector_holder_tests.mm */,
 			);
 			name = observing_tests;
 			path = ../../observing_tests;
@@ -188,6 +191,7 @@
 				B65A940825EB9DF9001A899B /* yas_observing_value_holder_tests.mm in Sources */,
 				B65A940925EB9DF9001A899B /* yas_observing_invalidator_pool_tests.mm in Sources */,
 				B65A940725EB9DF9001A899B /* yas_observing_map_holder_tests.mm in Sources */,
+				B6BB65632610846D003FB755 /* yas_observing_syncable_tests.mm in Sources */,
 				B65A940525EB9DF9001A899B /* yas_observing_vector_holder_tests.mm in Sources */,
 				B65A940325EB9DF9001A899B /* yas_observing_canceller_tests.mm in Sources */,
 				B65A940625EB9DF9001A899B /* yas_observing_fetcher_tests.mm in Sources */,

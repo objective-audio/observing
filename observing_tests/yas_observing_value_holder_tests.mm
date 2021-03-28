@@ -51,7 +51,7 @@ using namespace yas::observing;
 
     std::vector<int> called;
 
-    auto canceller = holder->observe([&called](int const &value) { called.emplace_back(value); }, true);
+    auto canceller = holder->observe([&called](int const &value) { called.emplace_back(value); }).sync();
 
     XCTAssertEqual(called.size(), 1);
     XCTAssertEqual(called.at(0), 100);
@@ -76,7 +76,7 @@ using namespace yas::observing;
 
     std::vector<int> called;
 
-    auto canceller = holder->observe([&called](int const &value) { called.emplace_back(value); }, false);
+    auto canceller = holder->observe([&called](int const &value) { called.emplace_back(value); }).end();
 
     XCTAssertEqual(called.size(), 0);
 

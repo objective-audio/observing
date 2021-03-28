@@ -37,13 +37,13 @@ using namespace yas::observing;
 
     auto const fetcher = observing::fetcher<int>::make_shared([&value] { return value; });
 
-    auto canceller1 = fetcher->observe([&called1](int const &value) { called1.emplace_back(value); }, true);
+    auto canceller1 = fetcher->observe([&called1](int const &value) { called1.emplace_back(value); }).sync();
 
     XCTAssertEqual(called1.size(), 0);
 
     value = 1;
 
-    auto canceller2 = fetcher->observe([&called2](int const &value) { called2.emplace_back(value); }, true);
+    auto canceller2 = fetcher->observe([&called2](int const &value) { called2.emplace_back(value); }).sync();
 
     XCTAssertEqual(called1.size(), 0);
     XCTAssertEqual(called2.size(), 1);

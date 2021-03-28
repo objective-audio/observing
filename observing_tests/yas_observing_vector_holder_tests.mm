@@ -147,8 +147,9 @@ using namespace yas::observing;
 
     std::vector<vector::event_type> called_event_types;
 
-    auto canceller = holder->observe(
-        [&called_event_types](auto const &event) { called_event_types.emplace_back(event.type); }, true);
+    auto canceller =
+        holder->observe([&called_event_types](auto const &event) { called_event_types.emplace_back(event.type); })
+            .sync();
 
     XCTAssertEqual(called_event_types.size(), 1);
     XCTAssertEqual(called_event_types.at(0), vector::event_type::any);

@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <observing/yas_observing_caller.h>
+#include <observing/yas_observing_syncable.h>
 
 #include <vector>
 
@@ -46,7 +46,7 @@ struct holder final {
     T erase(std::size_t const);
     void clear();
 
-    [[nodiscard]] canceller_ptr observe(typename caller<event>::handler_f &&, bool const sync);
+    [[nodiscard]] syncable observe(typename caller<event>::handler_f &&);
 
     [[nodiscard]] static holder_ptr<T> make_shared();
     [[nodiscard]] static holder_ptr<T> make_shared(std::vector<T> &&);

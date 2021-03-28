@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <observing/yas_observing_caller.h>
+#include <observing/yas_observing_syncable.h>
 
 namespace yas::observing::value {
 template <typename T>
@@ -20,7 +20,7 @@ struct holder final {
 
     [[nodiscard]] T const &value() const;
 
-    [[nodiscard]] canceller_ptr observe(typename caller<T>::handler_f &&, bool const sync);
+    [[nodiscard]] syncable observe(typename caller<T>::handler_f &&);
 
     [[nodiscard]] static holder_ptr<T> make_shared(T const &);
     [[nodiscard]] static holder_ptr<T> make_shared(T &&);

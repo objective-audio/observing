@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <observing/yas_observing_caller.h>
+#include <observing/yas_observing_syncable.h>
 
 namespace yas::observing {
 template <typename T>
@@ -20,7 +20,7 @@ struct fetcher final {
     void push();
     void push(T const &value);
 
-    [[nodiscard]] canceller_ptr observe(typename caller<T>::handler_f &&, bool const sync);
+    [[nodiscard]] syncable observe(typename caller<T>::handler_f &&);
 
     [[nodiscard]] static fetcher_ptr<T> make_shared(std::function<std::optional<T>(void)>);
 

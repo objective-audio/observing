@@ -20,8 +20,8 @@ using namespace yas::observing;
     std::vector<int> called1;
     std::vector<int> called2;
 
-    auto const canceller1 = notifier->observe([&called1](int const &value) { called1.emplace_back(value); });
-    auto const canceller2 = notifier->observe([&called2](int const &value) { called2.emplace_back(value); });
+    auto const canceller1 = notifier->observe([&called1](int const &value) { called1.emplace_back(value); }).end();
+    auto const canceller2 = notifier->observe([&called2](int const &value) { called2.emplace_back(value); }).end();
 
     XCTAssertEqual(called1.size(), 0);
     XCTAssertEqual(called2.size(), 0);
