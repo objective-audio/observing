@@ -8,7 +8,11 @@
 
 namespace yas::observing {
 struct endable {
-    endable(std::function<canceller_ptr(void)> &&);
+    endable();
+    explicit endable(std::function<canceller_ptr(void)> &&);
+
+    endable(endable &&) = default;
+    endable &operator=(endable &&) = default;
 
     canceller_ptr end();
 
@@ -16,13 +20,15 @@ struct endable {
     std::function<canceller_ptr(void)> _handler;
 
     endable(endable const &) = delete;
-    endable(endable &&) = delete;
     endable &operator=(endable const &) = delete;
-    endable &operator=(endable &&) = delete;
 };
 
 struct syncable final {
-    syncable(std::function<canceller_ptr(bool const)> &&);
+    syncable();
+    explicit syncable(std::function<canceller_ptr(bool const)> &&);
+
+    syncable(syncable &&) = default;
+    syncable &operator=(syncable &&) = default;
 
     canceller_ptr sync();
     canceller_ptr end();
@@ -31,5 +37,8 @@ struct syncable final {
     std::function<canceller_ptr(bool const)> _handler;
 
     canceller_ptr _call_handler(bool const);
+
+    syncable(syncable const &) = delete;
+    syncable &operator=(syncable const &) = delete;
 };
 }  // namespace yas::observing
