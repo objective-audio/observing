@@ -7,6 +7,9 @@
 using namespace yas;
 using namespace yas::observing;
 
+endable::endable() : _handler(nullptr) {
+}
+
 endable::endable(std::function<canceller_ptr(void)> &&handler) : _handler(std::move(handler)) {
 }
 
@@ -17,6 +20,9 @@ canceller_ptr endable::end() {
     } else {
         return nullptr;
     }
+}
+
+syncable::syncable() : _handler(nullptr) {
 }
 
 syncable::syncable(std::function<canceller_ptr(bool const)> &&handler) : _handler(std::move(handler)) {
