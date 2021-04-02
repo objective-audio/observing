@@ -4,42 +4,69 @@
 
 #include "yas_observing_syncable.h"
 
+#include <cpp_utils/yas_stl_utils.h>
+#include <observing/yas_observing_canceller_pool.h>
+
 using namespace yas;
 using namespace yas::observing;
 
-endable::endable() : _handler(nullptr) {
+syncable::syncable() {
 }
 
-endable::endable(std::function<canceller_ptr(void)> &&handler) : _handler(std::move(handler)) {
+syncable::syncable(std::function<canceller_ptr(bool const)> &&handler) {
+    this->_sync_handlers.emplace_back(std::move(handler));
 }
 
-canceller_ptr endable::end() {
-    if (auto handler = std::move(this->_handler)) {
-        this->_handler = nullptr;
-        return handler();
-    } else {
-        return nullptr;
-    }
+cancellable_ptr syncable::sync() {
+    return this->_call_handlers(true);
 }
 
-syncable::syncable() : _handler(nullptr) {
+cancellable_ptr syncable::end() {
+    return this->_call_handlers(false);
 }
 
-syncable::syncable(std::function<canceller_ptr(bool const)> &&handler) : _handler(std::move(handler)) {
+void syncable::merge(syncable &&other) {
+    move_back_insert(this->_sync_handlers, std::move(other._sync_handlers));
+    move_back_insert(this->_end_handlers, std::move(other._end_handlers));
+    other._sync_handlers.clear();
+    other._end_handlers.clear();
 }
 
-canceller_ptr syncable::sync() {
-    return this->_call_handler(true);
+void syncable::merge(endable &&other) {
+    move_back_insert(this->_end_handlers, std::move(other._handlers));
+    other._handlers.clear();
 }
 
-canceller_ptr syncable::end() {
-    return this->_call_handler(false);
-}
+cancellable_ptr syncable::_call_handlers(bool const sync) {
+    auto const handler_count = this->_sync_handlers.size() + this->_end_handlers.size();
 
-canceller_ptr syncable::_call_handler(bool const sync) {
-    if (auto handler = std::move(this->_handler)) {
-        this->_handler = nullptr;
-        return handler(sync);
+    if (handler_count > 1) {
+        auto pool = canceller_pool::make_shared();
+
+        for (auto const &handler : this->_sync_handlers) {
+            pool->add_canceller(handler(sync));
+        }
+
+        for (auto const &handler : this->_end_handlers) {
+            pool->add_canceller(handler());
+        }
+
+        this->_sync_handlers.clear();
+        this->_end_handlers.clear();
+
+        return pool;
+    } else if (handler_count == 1) {
+        if (this->_sync_handlers.size() > 0) {
+            auto canceller = this->_sync_handlers.at(0)(sync);
+            this->_sync_handlers.clear();
+            return canceller;
+        } else if (this->_end_handlers.size() > 0) {
+            auto canceller = this->_end_handlers.at(0)();
+            this->_end_handlers.clear();
+            return canceller;
+        } else {
+            throw std::runtime_error("unreachable");
+        }
     } else {
         return nullptr;
     }
