@@ -15,44 +15,7 @@ using namespace yas::observing;
 
 @implementation yas_observing_syncable_tests
 
-- (void)test_endable {
-    std::size_t handler_called = 0;
-    std::vector<uint32_t> canceller_called;
-
-    observing::endable endable{[&handler_called, &canceller_called] {
-        handler_called++;
-        return canceller::make_shared(
-            100, [&canceller_called](uint32_t const identifier) { canceller_called.emplace_back(identifier); });
-    }};
-
-    XCTAssertEqual(handler_called, 0);
-    XCTAssertEqual(canceller_called.size(), 0);
-
-    auto canceller1 = endable.end();
-
-    XCTAssertEqual(handler_called, 1);
-    XCTAssertTrue(canceller1);
-
-    canceller1->cancel();
-
-    XCTAssertEqual(canceller_called.size(), 1);
-    XCTAssertEqual(canceller_called.at(0), 100);
-
-    auto canceller2 = endable.end();
-
-    XCTAssertEqual(canceller_called.size(), 1);
-    XCTAssertFalse(canceller2);
-}
-
-- (void)test_endable_empty {
-    observing::endable endable;
-
-    auto canceller = endable.end();
-
-    XCTAssertEqual(canceller, nullptr);
-}
-
-- (void)test_syncable_sync {
+- (void)test_sync {
     std::vector<bool> handler_called;
     std::vector<uint32_t> canceller_called;
 
@@ -83,7 +46,7 @@ using namespace yas::observing;
     XCTAssertFalse(canceller2);
 }
 
-- (void)test_syncable_end {
+- (void)test_end {
     std::vector<bool> handler_called;
     std::vector<uint32_t> canceller_called;
 
@@ -112,6 +75,67 @@ using namespace yas::observing;
     XCTAssertEqual(handler_called.size(), 1);
     XCTAssertEqual(canceller_called.size(), 1);
     XCTAssertFalse(canceller2);
+}
+
+- (void)test_merge {
+    std::vector<bool> handler_called1;
+    std::vector<uint32_t> canceller_called1;
+
+    observing::syncable syncable1{[&handler_called1, &canceller_called1](bool const sync) {
+        handler_called1.emplace_back(sync);
+        return canceller::make_shared(
+            201, [&canceller_called1](uint32_t const identifier) { canceller_called1.emplace_back(identifier); });
+    }};
+
+    std::vector<bool> handler_called2;
+    std::vector<uint32_t> canceller_called2;
+
+    observing::syncable syncable2{[&handler_called2, &canceller_called2](bool const sync) {
+        handler_called2.emplace_back(sync);
+        return canceller::make_shared(
+            202, [&canceller_called2](uint32_t const identifier) { canceller_called2.emplace_back(identifier); });
+    }};
+
+    std::size_t handler_called3 = 0;
+    std::vector<uint32_t> canceller_called3;
+
+    observing::endable endable{[&handler_called3, &canceller_called3] {
+        handler_called3++;
+        return canceller::make_shared(
+            203, [&canceller_called3](uint32_t const identifier) { canceller_called3.emplace_back(identifier); });
+    }};
+
+    syncable1.merge(std::move(syncable2));
+
+    XCTAssertFalse(syncable2.end());
+
+    XCTAssertEqual(handler_called2.size(), 0);
+    XCTAssertEqual(canceller_called2.size(), 0);
+
+    syncable1.merge(std::move(endable));
+
+    XCTAssertFalse(endable.end());
+
+    XCTAssertEqual(handler_called3, 0);
+    XCTAssertEqual(canceller_called3.size(), 0);
+
+    auto canceller1 = syncable1.sync();
+
+    XCTAssertTrue(canceller1);
+    XCTAssertEqual(handler_called1.size(), 1);
+    XCTAssertTrue(handler_called1.at(0));
+    XCTAssertEqual(handler_called2.size(), 1);
+    XCTAssertTrue(handler_called2.at(0));
+    XCTAssertEqual(handler_called3, 1);
+
+    canceller1->cancel();
+
+    XCTAssertEqual(canceller_called1.size(), 1);
+    XCTAssertEqual(canceller_called1.at(0), 201);
+    XCTAssertEqual(canceller_called2.size(), 1);
+    XCTAssertEqual(canceller_called2.at(0), 202);
+    XCTAssertEqual(canceller_called3.size(), 1);
+    XCTAssertEqual(canceller_called3.at(0), 203);
 }
 
 @end
