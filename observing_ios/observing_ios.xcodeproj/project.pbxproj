@@ -30,6 +30,7 @@
 		B6BB655C2610845B003FB755 /* yas_observing_syncable.h in Headers */ = {isa = PBXBuildFile; fileRef = B6BB655A2610845B003FB755 /* yas_observing_syncable.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B6E139D8261879BE00E7B416 /* yas_observing_endable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6E139D6261879BE00E7B416 /* yas_observing_endable.cpp */; };
 		B6E139D9261879BE00E7B416 /* yas_observing_endable.h in Headers */ = {isa = PBXBuildFile; fileRef = B6E139D7261879BE00E7B416 /* yas_observing_endable.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B6EF9C3326197CE2000FC8F2 /* cpp_utils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6EF9C3226197CE2000FC8F2 /* cpp_utils.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +59,7 @@
 		B6BB655A2610845B003FB755 /* yas_observing_syncable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yas_observing_syncable.h; sourceTree = "<group>"; };
 		B6E139D6261879BE00E7B416 /* yas_observing_endable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = yas_observing_endable.cpp; sourceTree = "<group>"; };
 		B6E139D7261879BE00E7B416 /* yas_observing_endable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yas_observing_endable.h; sourceTree = "<group>"; };
+		B6EF9C3226197CE2000FC8F2 /* cpp_utils.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = cpp_utils.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6EF9C3326197CE2000FC8F2 /* cpp_utils.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,6 +79,7 @@
 			children = (
 				B69346DF25EB704C00B40CA7 /* observing */,
 				B69346DE25EB704C00B40CA7 /* Products */,
+				B6EF9C3126197CE2000FC8F2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -125,6 +129,14 @@
 			);
 			name = observing;
 			path = ../../observing;
+			sourceTree = "<group>";
+		};
+		B6EF9C3126197CE2000FC8F2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B6EF9C3226197CE2000FC8F2 /* cpp_utils.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

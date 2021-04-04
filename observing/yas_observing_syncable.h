@@ -20,6 +20,8 @@ struct syncable final {
     void merge(syncable &&);
     void merge(endable &&);
 
+    endable to_endable();
+
    private:
     std::vector<std::function<canceller_ptr(bool const)>> _sync_handlers;
     std::vector<std::function<canceller_ptr(void)>> _end_handlers;

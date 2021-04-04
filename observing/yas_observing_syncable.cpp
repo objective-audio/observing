@@ -37,6 +37,22 @@ void syncable::merge(endable &&other) {
     other._handlers.clear();
 }
 
+endable syncable::to_endable() {
+    endable result;
+
+    if (this->_sync_handlers.size() > 0) {
+        for (auto const &handler : this->_sync_handlers) {
+            result._handlers.emplace_back([handler] { return handler(false); });
+        }
+        this->_sync_handlers.clear();
+    }
+
+    move_back_insert(result._handlers, std::move(this->_end_handlers));
+    this->_end_handlers.clear();
+
+    return result;
+}
+
 cancellable_ptr syncable::_call_handlers(bool const sync) {
     auto const handler_count = this->_sync_handlers.size() + this->_end_handlers.size();
 
