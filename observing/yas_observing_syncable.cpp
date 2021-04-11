@@ -14,7 +14,9 @@ syncable::syncable() {
 }
 
 syncable::syncable(std::function<canceller_ptr(bool const)> &&handler) {
-    this->_sync_handlers.emplace_back(std::move(handler));
+    if (handler) {
+        this->_sync_handlers.emplace_back(std::move(handler));
+    }
 }
 
 cancellable_ptr syncable::sync() {

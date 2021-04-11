@@ -52,6 +52,14 @@ using namespace yas::observing;
     XCTAssertEqual(canceller, nullptr);
 }
 
+- (void)test_create_null {
+    observing::endable endable{nullptr};
+
+    auto canceller = endable.end();
+
+    XCTAssertEqual(canceller, nullptr);
+}
+
 - (void)test_merge {
     std::size_t handler_called_1 = 0;
     std::vector<uint32_t> canceller_called_1;

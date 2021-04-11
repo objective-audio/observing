@@ -14,7 +14,9 @@ endable::endable() {
 }
 
 endable::endable(std::function<canceller_ptr(void)> &&handler) {
-    this->_handlers.emplace_back(std::move(handler));
+    if (handler) {
+        this->_handlers.emplace_back(std::move(handler));
+    }
 }
 
 cancellable_ptr endable::end() {
