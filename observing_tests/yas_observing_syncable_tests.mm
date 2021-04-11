@@ -181,4 +181,20 @@ using namespace yas::observing;
     XCTAssertEqual(canceller_called2.at(0), 302);
 }
 
+- (void)test_create_empty {
+    observing::syncable syncable;
+
+    auto canceller = syncable.sync();
+
+    XCTAssertEqual(canceller, nullptr);
+}
+
+- (void)test_create_null {
+    observing::syncable syncable{nullptr};
+
+    auto canceller = syncable.sync();
+
+    XCTAssertEqual(canceller, nullptr);
+}
+
 @end
