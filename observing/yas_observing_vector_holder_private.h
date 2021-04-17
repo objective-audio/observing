@@ -113,8 +113,11 @@ void holder<T>::_call_any() {
 
 template <typename T>
 void holder<T>::_call_replaced(T const *erased, std::size_t const idx) {
-    this->_caller.call(
-        event{.type = event_type::replaced, .elements = this->_raw, .inserted = &this->_raw.at(idx), .index = idx});
+    this->_caller.call(event{.type = event_type::replaced,
+                             .elements = this->_raw,
+                             .inserted = &this->_raw.at(idx),
+                             .erased = erased,
+                             .index = idx});
 }
 
 template <typename T>
