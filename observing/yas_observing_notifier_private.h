@@ -11,17 +11,17 @@ notifier<T>::notifier() {
 
 template <typename T>
 void notifier<T>::notify(T const &value) {
-    this->_caller.call(value);
+    this->_caller->call(value);
 }
 
 template <typename T>
 void notifier<T>::notify() {
-    this->_caller.call(nullptr);
+    this->_caller->call(nullptr);
 }
 
 template <typename T>
 endable notifier<T>::observe(typename caller<T>::handler_f &&handler) {
-    return endable{[canceller = this->_caller.add(std::move(handler))] { return canceller; }};
+    return endable{[canceller = this->_caller->add(std::move(handler))] { return canceller; }};
 }
 
 template <typename T>
