@@ -122,7 +122,7 @@ using namespace yas::observing;
 
 - (void)test_destruct_on_calling {
     struct caller_holder {
-        std::shared_ptr<observing::caller<int>> caller = std::make_shared<observing::caller<int>>();
+        observing::caller_ptr<int> caller = observing::caller<int>::make_shared();
     };
 
     auto holder = std::make_shared<caller_holder>();

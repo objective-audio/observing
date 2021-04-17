@@ -36,4 +36,9 @@ void caller<T>::call(T const &value) {
         this->_calling = false;
     }
 }
+
+template <typename T>
+caller_ptr<T> caller<T>::make_shared() {
+    return caller_ptr<T>(new caller<T>{});
+}
 }  // namespace yas::observing
