@@ -134,6 +134,17 @@ using namespace yas::observing;
     XCTAssertEqual(holder->value(), (std::vector<int>{90, 92}));
 }
 
+- (void)test_erase_first {
+    auto const holder = vector::holder<int>::make_shared({95, 96, 97, 96, 98});
+
+    XCTAssertEqual(holder->erase_first(100), std::nullopt);
+    XCTAssertEqual(holder->value().size(), 5);
+
+    auto const erased = holder->erase_first(96);
+    XCTAssertEqual(erased.value(), 96);
+    XCTAssertEqual(holder->value(), (std::vector<int>{95, 97, 96, 98}));
+}
+
 - (void)test_clear {
     auto const holder = vector::holder<int>::make_shared({100, 101});
 

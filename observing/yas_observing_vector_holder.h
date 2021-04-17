@@ -45,6 +45,7 @@ struct holder final {
     void insert(T const &, std::size_t const);
     void insert(T &&, std::size_t const);
     T erase(std::size_t const);
+    std::optional<T> erase_first(T const &);
     void clear();
 
     [[nodiscard]] syncable observe(typename caller<event>::handler_f &&);

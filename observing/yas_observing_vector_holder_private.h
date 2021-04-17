@@ -89,6 +89,15 @@ T holder<T>::erase(std::size_t const idx) {
 }
 
 template <typename T>
+std::optional<T> holder<T>::erase_first(T const &value) {
+    if (auto const idx = yas::index(this->_raw, value)) {
+        return this->erase(idx.value());
+    } else {
+        return std::nullopt;
+    }
+}
+
+template <typename T>
 void holder<T>::clear() {
     if (this->_raw.size() > 0) {
         this->_raw.clear();
