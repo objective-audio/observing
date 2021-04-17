@@ -55,7 +55,7 @@ struct holder final {
 
    private:
     std::vector<T> _raw;
-    caller<event> _caller;
+    caller_ptr<event> const _caller = caller<event>::make_shared();
 
     holder(std::vector<T> const &);
     holder(std::vector<T> &&);
