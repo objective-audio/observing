@@ -17,13 +17,13 @@ std::optional<T> fetcher<T>::fetched_value() const {
 template <typename T>
 void fetcher<T>::push() {
     if (auto const fetched = this->fetched_value(); fetched.has_value()) {
-        this->_caller.call(fetched.value());
+        this->_caller->call(fetched.value());
     }
 }
 
 template <typename T>
 void fetcher<T>::push(T const &value) {
-    this->_caller.call(value);
+    this->_caller->call(value);
 }
 
 template <typename T>
@@ -34,7 +34,7 @@ syncable fetcher<T>::observe(typename caller<T>::handler_f &&handler) {
                 handler(fetched.value());
             }
         }
-        return this->_caller.add(std::move(handler));
+        return this->_caller->add(std::move(handler));
     }};
 }
 
