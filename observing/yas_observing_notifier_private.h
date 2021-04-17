@@ -11,12 +11,14 @@ notifier<T>::notifier() {
 
 template <typename T>
 void notifier<T>::notify(T const &value) {
-    this->_caller->call(value);
+    auto caller = this->_caller;
+    caller->call(value);
 }
 
 template <typename T>
 void notifier<T>::notify() {
-    this->_caller->call(nullptr);
+    auto caller = this->_caller;
+    caller->call(nullptr);
 }
 
 template <typename T>
