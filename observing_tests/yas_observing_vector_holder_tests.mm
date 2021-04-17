@@ -145,47 +145,82 @@ using namespace yas::observing;
 - (void)test_observe {
     auto const holder = vector::holder<int>::make_shared({200, 201});
 
-    std::vector<vector::event_type> called_event_types;
+    struct called_event {
+        vector::event_type type;
+        std::optional<int> inserted{std::nullopt};
+        std::optional<int> erased{std::nullopt};
+        std::optional<std::size_t> index{std::nullopt};
+    };
 
-    auto canceller =
-        holder->observe([&called_event_types](auto const &event) { called_event_types.emplace_back(event.type); })
-            .sync();
+    std::vector<called_event> called_events;
 
-    XCTAssertEqual(called_event_types.size(), 1);
-    XCTAssertEqual(called_event_types.at(0), vector::event_type::any);
+    auto canceller = holder
+                         ->observe([&called_events](auto const &event) {
+                             called_events.emplace_back(called_event{
+                                 .type = event.type,
+                                 .inserted = event.inserted ? std::optional<int>(*event.inserted) : std::nullopt,
+                                 .erased = event.erased ? std::optional<int>(*event.erased) : std::nullopt,
+                                 .index = event.index,
+                             });
+                         })
+                         .sync();
+
+    XCTAssertEqual(called_events.size(), 1);
+    XCTAssertEqual(called_events.at(0).type, vector::event_type::any);
+    XCTAssertEqual(called_events.at(0).inserted, std::nullopt);
+    XCTAssertEqual(called_events.at(0).erased, std::nullopt);
+    XCTAssertEqual(called_events.at(0).index, std::nullopt);
 
     holder->replace(std::vector<int>{210, 211, 212});
 
-    XCTAssertEqual(called_event_types.size(), 2);
-    XCTAssertEqual(called_event_types.at(1), vector::event_type::any);
+    XCTAssertEqual(called_events.size(), 2);
+    XCTAssertEqual(called_events.at(1).type, vector::event_type::any);
+    XCTAssertEqual(called_events.at(1).inserted, std::nullopt);
+    XCTAssertEqual(called_events.at(1).erased, std::nullopt);
+    XCTAssertEqual(called_events.at(1).index, std::nullopt);
 
     holder->replace(220, 1);
 
-    XCTAssertEqual(called_event_types.size(), 3);
-    XCTAssertEqual(called_event_types.at(2), vector::event_type::replaced);
+    XCTAssertEqual(called_events.size(), 3);
+    XCTAssertEqual(called_events.at(2).type, vector::event_type::replaced);
+    XCTAssertEqual(called_events.at(2).inserted, 220);
+    XCTAssertEqual(called_events.at(2).erased, 211);
+    XCTAssertEqual(called_events.at(2).index, 1);
 
     holder->push_back(221);
 
-    XCTAssertEqual(called_event_types.size(), 4);
-    XCTAssertEqual(called_event_types.at(3), vector::event_type::inserted);
+    XCTAssertEqual(called_events.size(), 4);
+    XCTAssertEqual(called_events.at(3).type, vector::event_type::inserted);
+    XCTAssertEqual(called_events.at(3).inserted, 221);
+    XCTAssertEqual(called_events.at(3).erased, std::nullopt);
+    XCTAssertEqual(called_events.at(3).index, 3);
 
     holder->insert(222, 0);
 
-    XCTAssertEqual(called_event_types.size(), 5);
-    XCTAssertEqual(called_event_types.at(4), vector::event_type::inserted);
+    XCTAssertEqual(called_events.size(), 5);
+    XCTAssertEqual(called_events.at(4).type, vector::event_type::inserted);
+    XCTAssertEqual(called_events.at(4).inserted, 222);
+    XCTAssertEqual(called_events.at(4).erased, std::nullopt);
+    XCTAssertEqual(called_events.at(4).index, 0);
 
     holder->erase(1);
 
-    XCTAssertEqual(called_event_types.size(), 6);
-    XCTAssertEqual(called_event_types.at(5), vector::event_type::erased);
+    XCTAssertEqual(called_events.size(), 6);
+    XCTAssertEqual(called_events.at(5).type, vector::event_type::erased);
+    XCTAssertEqual(called_events.at(5).inserted, std::nullopt);
+    XCTAssertEqual(called_events.at(5).erased, 210);
+    XCTAssertEqual(called_events.at(5).index, 1);
 
     holder->clear();
 
-    XCTAssertEqual(called_event_types.size(), 7);
-    XCTAssertEqual(called_event_types.at(6), vector::event_type::any);
+    XCTAssertEqual(called_events.size(), 7);
+    XCTAssertEqual(called_events.at(6).type, vector::event_type::any);
+    XCTAssertEqual(called_events.at(6).inserted, std::nullopt);
+    XCTAssertEqual(called_events.at(6).erased, std::nullopt);
+    XCTAssertEqual(called_events.at(6).index, std::nullopt);
 
     holder->clear();
-    XCTAssertEqual(called_event_types.size(), 7);
+    XCTAssertEqual(called_events.size(), 7);
 }
 
 @end
