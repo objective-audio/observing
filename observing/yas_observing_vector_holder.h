@@ -27,7 +27,8 @@ struct holder final {
     struct event {
         event_type type;
         std::vector<T> const &elements;
-        T const *element = nullptr;                       // replaced, inserted, erased
+        T const *inserted = nullptr;                      // replaced, inserted
+        T const *erased = nullptr;                        // replaced, erased
         std::optional<std::size_t> index = std::nullopt;  // replaced, inserted, erased
     };
 
@@ -60,7 +61,7 @@ struct holder final {
     holder(std::vector<T> &&);
 
     void _call_any();
-    void _call_replaced(std::size_t const idx);
+    void _call_replaced(T const *erased, std::size_t const idx);
     void _call_inserted(std::size_t const idx);
     void _call_erased(T const *, std::size_t const idx);
 };

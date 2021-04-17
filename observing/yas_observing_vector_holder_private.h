@@ -44,14 +44,16 @@ void holder<T>::replace(std::vector<T> &&value) {
 
 template <typename T>
 void holder<T>::replace(T const &element, std::size_t const idx) {
+    T erased = this->_raw.at(idx);
     this->_raw.at(idx) = element;
-    this->_call_replaced(idx);
+    this->_call_replaced(&erased, idx);
 }
 
 template <typename T>
 void holder<T>::replace(T &&element, std::size_t const idx) {
+    T erased = this->_raw.at(idx);
     this->_raw.at(idx) = std::move(element);
-    this->_call_replaced(idx);
+    this->_call_replaced(&erased, idx);
 }
 
 template <typename T>
@@ -110,20 +112,20 @@ void holder<T>::_call_any() {
 }
 
 template <typename T>
-void holder<T>::_call_replaced(std::size_t const idx) {
+void holder<T>::_call_replaced(T const *erased, std::size_t const idx) {
     this->_caller.call(
-        event{.type = event_type::replaced, .elements = this->_raw, .element = &this->_raw.at(idx), .index = idx});
+        event{.type = event_type::replaced, .elements = this->_raw, .inserted = &this->_raw.at(idx), .index = idx});
 }
 
 template <typename T>
 void holder<T>::_call_inserted(std::size_t const idx) {
     this->_caller.call(
-        event{.type = event_type::inserted, .elements = this->_raw, .element = &this->_raw.at(idx), .index = idx});
+        event{.type = event_type::inserted, .elements = this->_raw, .inserted = &this->_raw.at(idx), .index = idx});
 }
 
 template <typename T>
-void holder<T>::_call_erased(T const *element, std::size_t const idx) {
-    this->_caller.call(event{.type = event_type::erased, .elements = this->_raw, .element = element, .index = idx});
+void holder<T>::_call_erased(T const *erased, std::size_t const idx) {
+    this->_caller.call(event{.type = event_type::erased, .elements = this->_raw, .erased = erased, .index = idx});
 }
 
 template <typename T>
