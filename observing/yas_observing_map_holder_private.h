@@ -113,23 +113,27 @@ holder_ptr<Key, Element> holder<Key, Element>::make_shared(std::map<Key, Element
 
 template <typename Key, typename Element>
 void holder<Key, Element>::_call_any() {
-    this->_caller->call(event{.type = event_type::any, .elements = this->_raw});
+    auto caller = this->_caller;
+    caller->call(event{.type = event_type::any, .elements = this->_raw});
 }
 
 template <typename Key, typename Element>
 void holder<Key, Element>::_call_replaced(std::optional<Key> const &key) {
-    this->_caller->call(
+    auto caller = this->_caller;
+    caller->call(
         event{.type = event_type::replaced, .elements = this->_raw, .element = &this->_raw.at(*key), .key = key});
 }
 
 template <typename Key, typename Element>
 void holder<Key, Element>::_call_inserted(std::optional<Key> const &key) {
-    this->_caller->call(
+    auto caller = this->_caller;
+    caller->call(
         event{.type = event_type::inserted, .elements = this->_raw, .element = &this->_raw.at(*key), .key = key});
 }
 
 template <typename Key, typename Element>
 void holder<Key, Element>::_call_erased(Element const *element, std::optional<Key> const &key) {
-    this->_caller->call(event{.type = event_type::erased, .elements = this->_raw, .element = element, .key = key});
+    auto caller = this->_caller;
+    caller->call(event{.type = event_type::erased, .elements = this->_raw, .element = element, .key = key});
 }
 }  // namespace yas::observing::map
