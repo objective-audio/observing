@@ -13,7 +13,7 @@ template <typename T>
 void holder<T>::set_value(T &&value) {
     if (this->_value != value) {
         this->_value = std::move(value);
-        this->_caller.call(this->_value);
+        this->_caller->call(this->_value);
     }
 }
 
@@ -36,7 +36,7 @@ syncable holder<T>::observe(typename caller<T>::handler_f &&handler) {
         if (sync) {
             handler(this->_value);
         }
-        return this->_caller.add(std::move(handler));
+        return this->_caller->add(std::move(handler));
     }};
 }
 
