@@ -4,6 +4,7 @@
 
 #import <XCTest/XCTest.h>
 #import <observing/observing.h>
+#import <memory>
 
 using namespace yas;
 using namespace yas::observing;
@@ -117,6 +118,23 @@ using namespace yas::observing;
     caller.call(0);
 
     XCTAssertEqual(called_count, 1);
+}
+
+- (void)test_destruct_on_calling {
+    struct caller_holder {
+        std::shared_ptr<observing::caller<int>> caller = std::make_shared<observing::caller<int>>();
+    };
+
+    auto holder = std::make_shared<caller_holder>();
+
+    auto canceller = holder->caller->add([&holder](int const &value) { holder->caller = nullptr; });
+
+    // callしている間保持していればクラッシュしない
+    auto caller = holder->caller;
+    holder->caller->call(0);
+    caller = nullptr;
+
+    canceller->cancel();
 }
 
 @end
