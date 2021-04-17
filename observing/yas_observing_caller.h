@@ -36,6 +36,9 @@ struct caller {
     std::map<uint32_t, handler_container> _handlers;
     std::vector<canceller_wptr> _cancellers;
     bool _calling = false;
+
+    caller() {
+    }
 };
 }  // namespace yas::observing
 
