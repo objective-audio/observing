@@ -27,7 +27,8 @@ struct holder final {
     struct event {
         event_type type;
         std::vector<T> const &elements;
-        T const *element = nullptr;                       // replaced, inserted, erased
+        T const *inserted = nullptr;                      // replaced, inserted
+        T const *erased = nullptr;                        // replaced, erased
         std::optional<std::size_t> index = std::nullopt;  // replaced, inserted, erased
     };
 
@@ -44,6 +45,7 @@ struct holder final {
     void insert(T const &, std::size_t const);
     void insert(T &&, std::size_t const);
     T erase(std::size_t const);
+    std::optional<T> erase_first(T const &);
     void clear();
 
     [[nodiscard]] syncable observe(typename caller<event>::handler_f &&);
@@ -54,13 +56,13 @@ struct holder final {
 
    private:
     std::vector<T> _raw;
-    caller<event> _caller;
+    caller_ptr<event> const _caller = caller<event>::make_shared();
 
     holder(std::vector<T> const &);
     holder(std::vector<T> &&);
 
     void _call_any();
-    void _call_replaced(std::size_t const idx);
+    void _call_replaced(T const *erased, std::size_t const idx);
     void _call_inserted(std::size_t const idx);
     void _call_erased(T const *, std::size_t const idx);
 };

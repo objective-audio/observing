@@ -4,6 +4,7 @@
 
 #import <XCTest/XCTest.h>
 #import <observing/observing.h>
+#import <memory>
 
 using namespace yas;
 using namespace yas::observing;
@@ -15,18 +16,18 @@ using namespace yas::observing;
 @implementation yas_observing_caller_tests
 
 - (void)test_call {
-    observing::caller<int> caller;
+    auto caller = observing::caller<int>::make_shared();
 
     std::vector<int> called1;
     std::vector<int> called2;
 
-    auto canceller1 = caller.add([&called1](int const &value) { called1.emplace_back(value); });
-    auto canceller2 = caller.add([&called2](int const &value) { called2.emplace_back(value); });
+    auto canceller1 = caller->add([&called1](int const &value) { called1.emplace_back(value); });
+    auto canceller2 = caller->add([&called2](int const &value) { called2.emplace_back(value); });
 
     XCTAssertEqual(called1.size(), 0);
     XCTAssertEqual(called2.size(), 0);
 
-    caller.call(1);
+    caller->call(1);
 
     XCTAssertEqual(called1.size(), 1);
     XCTAssertEqual(called1.at(0), 1);
@@ -35,7 +36,7 @@ using namespace yas::observing;
 
     canceller1->cancel();
 
-    caller.call(2);
+    caller->call(2);
 
     XCTAssertEqual(called1.size(), 1);
     XCTAssertEqual(called2.size(), 2);
@@ -43,22 +44,22 @@ using namespace yas::observing;
 }
 
 - (void)test_ignore {
-    observing::caller<int> caller;
+    auto caller = observing::caller<int>::make_shared();
 
     std::vector<int> called;
 
-    auto canceller = caller.add([&called](int const &value) { called.emplace_back(value); });
+    auto canceller = caller->add([&called](int const &value) { called.emplace_back(value); });
 
     XCTAssertEqual(called.size(), 0);
 
-    caller.call(3);
+    caller->call(3);
 
     XCTAssertEqual(called.size(), 1);
     XCTAssertEqual(called.at(0), 3);
 
     canceller->ignore();
 
-    caller.call(4);
+    caller->call(4);
 
     XCTAssertEqual(called.size(), 2);
     XCTAssertEqual(called.at(1), 4);
@@ -70,11 +71,11 @@ using namespace yas::observing;
     canceller_ptr canceller = nullptr;
 
     {
-        observing::caller<int> caller;
+        auto caller = observing::caller<int>::make_shared();
 
-        canceller = caller.add([&called](int const &value) { called.emplace_back(value); });
+        canceller = caller->add([&called](int const &value) { called.emplace_back(value); });
 
-        caller.call(5);
+        caller->call(5);
 
         XCTAssertEqual(called.size(), 1);
         XCTAssertEqual(called.at(0), 5);
@@ -84,39 +85,56 @@ using namespace yas::observing;
 }
 
 - (void)test_destruct_canceller {
-    observing::caller<int> caller;
+    auto caller = observing::caller<int>::make_shared();
 
     std::vector<int> called1;
 
     {
-        auto canceller1 = caller.add([&called1](int const &value) { called1.emplace_back(value); });
+        auto canceller1 = caller->add([&called1](int const &value) { called1.emplace_back(value); });
 
         XCTAssertEqual(called1.size(), 0);
 
-        caller.call(6);
+        caller->call(6);
 
         XCTAssertEqual(called1.size(), 1);
         XCTAssertEqual(called1.at(0), 6);
     }
 
-    caller.call(7);
+    caller->call(7);
 
     XCTAssertEqual(called1.size(), 1);
 }
 
 - (void)test_ignore_recursive_call {
-    observing::caller<int> caller;
+    auto caller = observing::caller<int>::make_shared();
 
     int called_count = 0;
 
-    auto canceller = caller.add([&caller, &called_count](int const &value) {
+    auto canceller = caller->add([&caller, &called_count](int const &value) {
         ++called_count;
-        caller.call(value);
+        caller->call(value);
     });
 
-    caller.call(0);
+    caller->call(0);
 
     XCTAssertEqual(called_count, 1);
+}
+
+- (void)test_destruct_on_calling {
+    struct caller_holder {
+        observing::caller_ptr<int> caller = observing::caller<int>::make_shared();
+    };
+
+    auto holder = std::make_shared<caller_holder>();
+
+    auto canceller = holder->caller->add([&holder](int const &value) { holder->caller = nullptr; });
+
+    // callしている間保持していればクラッシュしない
+    auto caller = holder->caller;
+    holder->caller->call(0);
+    caller = nullptr;
+
+    canceller->cancel();
 }
 
 @end

@@ -23,7 +23,7 @@ struct notifier final {
     [[nodiscard]] static notifier_ptr<T> make_shared();
 
    private:
-    caller<T> _caller;
+    caller_ptr<T> const _caller = caller<T>::make_shared();
 
     notifier();
 };
