@@ -27,7 +27,8 @@ struct holder final {
     struct event {
         event_type type;
         std::map<Key, Element> const &elements;
-        Element const *element = nullptr;
+        Element const *inserted = nullptr;
+        Element const *erased = nullptr;
         std::optional<Key> key = std::nullopt;
     };
 
@@ -56,7 +57,7 @@ struct holder final {
     holder(std::map<Key, Element> &&);
 
     void _call_any();
-    void _call_replaced(std::optional<Key> const &);
+    void _call_replaced(Element const *, std::optional<Key> const &);
     void _call_inserted(std::optional<Key> const &);
     void _call_erased(Element const *, std::optional<Key> const &);
 };

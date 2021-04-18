@@ -49,17 +49,17 @@ void holder<Key, Element>::replace(std::map<Key, Element> &&map) {
 
 template <typename Key, typename Element>
 void holder<Key, Element>::insert_or_replace(Key const &key, Element const &element) {
-    bool replaced = false;
+    std::map<Key, Element> erased;
 
     if (this->_raw.count(key) > 0) {
+        erased.emplace(key, std::move(this->_raw.at(key)));
         this->_raw.erase(key);
-        replaced = true;
     }
 
     this->_raw.emplace(key, element);
 
-    if (replaced) {
-        this->_call_replaced(key);
+    if (!erased.empty()) {
+        this->_call_replaced(&erased.at(key), key);
     } else {
         this->_call_inserted(key);
     }
@@ -118,22 +118,25 @@ void holder<Key, Element>::_call_any() {
 }
 
 template <typename Key, typename Element>
-void holder<Key, Element>::_call_replaced(std::optional<Key> const &key) {
+void holder<Key, Element>::_call_replaced(Element const *erased, std::optional<Key> const &key) {
     auto caller = this->_caller;
-    caller->call(
-        event{.type = event_type::replaced, .elements = this->_raw, .element = &this->_raw.at(*key), .key = key});
+    caller->call(event{.type = event_type::replaced,
+                       .elements = this->_raw,
+                       .inserted = &this->_raw.at(*key),
+                       .erased = erased,
+                       .key = key});
 }
 
 template <typename Key, typename Element>
 void holder<Key, Element>::_call_inserted(std::optional<Key> const &key) {
     auto caller = this->_caller;
     caller->call(
-        event{.type = event_type::inserted, .elements = this->_raw, .element = &this->_raw.at(*key), .key = key});
+        event{.type = event_type::inserted, .elements = this->_raw, .inserted = &this->_raw.at(*key), .key = key});
 }
 
 template <typename Key, typename Element>
-void holder<Key, Element>::_call_erased(Element const *element, std::optional<Key> const &key) {
+void holder<Key, Element>::_call_erased(Element const *erased, std::optional<Key> const &key) {
     auto caller = this->_caller;
-    caller->call(event{.type = event_type::erased, .elements = this->_raw, .element = element, .key = key});
+    caller->call(event{.type = event_type::erased, .elements = this->_raw, .erased = erased, .key = key});
 }
 }  // namespace yas::observing::map
