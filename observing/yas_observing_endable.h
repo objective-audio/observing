@@ -18,7 +18,7 @@ struct endable final {
     endable(endable &&) = default;
     endable &operator=(endable &&) = default;
 
-    cancellable_ptr end();
+    [[nodiscard]] cancellable_ptr end();
 
     void merge(endable &&);
 

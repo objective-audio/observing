@@ -14,8 +14,8 @@ struct syncable final {
     syncable(syncable &&) = default;
     syncable &operator=(syncable &&) = default;
 
-    cancellable_ptr sync();
-    cancellable_ptr end();
+    [[nodiscard]] cancellable_ptr sync();
+    [[nodiscard]] cancellable_ptr end();
 
     void merge(syncable &&);
     void merge(endable &&);
