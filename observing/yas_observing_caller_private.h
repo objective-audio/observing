@@ -18,7 +18,9 @@ template <typename T>
 canceller_ptr caller<T>::add(handler_f &&handler) {
     auto canceller = canceller::make_shared([this](uintptr_t const identifier) {
         this->_handlers.at(identifier).enabled = false;
-        this->_handlers.erase(identifier);
+        if (!this->_calling) {
+            this->_handlers.erase(identifier);
+        }
         this->_cancellers.erase(identifier);
     });
     auto const identifier = canceller->identifier();
@@ -31,10 +33,18 @@ template <typename T>
 void caller<T>::call(T const &value) {
     if (!this->_calling) {
         this->_calling = true;
+        std::vector<uintptr_t> removed;
         for (auto const &pair : this->_handlers) {
             if (pair.second.enabled) {
                 pair.second.handler(value);
             }
+
+            if (!pair.second.enabled) {
+                removed.emplace_back(pair.first);
+            }
+        }
+        for (auto const &identifier : removed) {
+            this->_handlers.erase(identifier);
         }
         this->_calling = false;
     }
