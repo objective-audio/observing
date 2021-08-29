@@ -88,4 +88,10 @@ using namespace yas::observing;
     XCTAssertFalse(canceller->has_cancellable());
 }
 
+- (void)test_identifier {
+    auto const canceller = canceller::make_shared([](uintptr_t const identifier) {});
+
+    XCTAssertEqual(canceller->identifier(), reinterpret_cast<uintptr_t>(canceller.get()));
+}
+
 @end
