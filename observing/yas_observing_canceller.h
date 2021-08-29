@@ -17,9 +17,7 @@ using canceller_ptr = std::shared_ptr<canceller>;
 using canceller_wptr = std::weak_ptr<canceller>;
 
 struct canceller final : cancellable {
-    using remover_f = std::function<void(uint32_t const)>;
-
-    uint32_t const identifier;
+    using remover_f = std::function<void(uintptr_t const)>;
 
     ~canceller();
 
@@ -29,13 +27,15 @@ struct canceller final : cancellable {
     void add_to(canceller_pool &) override;
     void set_to(cancellable_ptr &) override;
 
-    [[nodiscard]] static canceller_ptr make_shared(uint32_t const identifier, remover_f &&);
+    uintptr_t identifier() const;
+
+    [[nodiscard]] static canceller_ptr make_shared(remover_f &&);
 
    private:
-    canceller(uint32_t const identifier, remover_f &&);
+    canceller(remover_f &&);
 
     std::weak_ptr<canceller> _weak_canceller;
-    std::function<void(uint32_t const)> _handler;
+    std::function<void(uintptr_t const)> _handler;
     bool _cancelled = false;
 };
 }  // namespace yas::observing
