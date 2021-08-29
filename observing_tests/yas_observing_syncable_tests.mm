@@ -17,12 +17,15 @@ using namespace yas::observing;
 
 - (void)test_sync {
     std::vector<bool> handler_called;
-    std::vector<uint32_t> canceller_called;
+    std::vector<uintptr_t> canceller_called;
+    uintptr_t canceller_id = 0;
 
-    observing::syncable syncable{[&handler_called, &canceller_called](bool const sync) {
+    observing::syncable syncable{[&handler_called, &canceller_called, &canceller_id](bool const sync) {
         handler_called.emplace_back(sync);
-        return canceller::make_shared(
-            200, [&canceller_called](uint32_t const identifier) { canceller_called.emplace_back(identifier); });
+        auto canceller = canceller::make_shared(
+            [&canceller_called](uintptr_t const identifier) { canceller_called.emplace_back(identifier); });
+        canceller_id = canceller->identifier();
+        return canceller;
     }};
 
     XCTAssertEqual(handler_called.size(), 0);
@@ -37,7 +40,8 @@ using namespace yas::observing;
     canceller1->cancel();
 
     XCTAssertEqual(canceller_called.size(), 1);
-    XCTAssertEqual(canceller_called.at(0), 200);
+    XCTAssertNotEqual(canceller_id, 0);
+    XCTAssertEqual(canceller_called.at(0), canceller_id);
 
     auto canceller2 = syncable.sync();
 
@@ -48,12 +52,15 @@ using namespace yas::observing;
 
 - (void)test_end {
     std::vector<bool> handler_called;
-    std::vector<uint32_t> canceller_called;
+    std::vector<uintptr_t> canceller_called;
+    uintptr_t canceller_id = 0;
 
-    observing::syncable syncable{[&handler_called, &canceller_called](bool const sync) {
+    observing::syncable syncable{[&handler_called, &canceller_called, &canceller_id](bool const sync) {
         handler_called.emplace_back(sync);
-        return canceller::make_shared(
-            300, [&canceller_called](uint32_t const identifier) { canceller_called.emplace_back(identifier); });
+        auto canceller = canceller::make_shared(
+            [&canceller_called](uintptr_t const identifier) { canceller_called.emplace_back(identifier); });
+        canceller_id = canceller->identifier();
+        return canceller;
     }};
 
     XCTAssertEqual(handler_called.size(), 0);
@@ -68,7 +75,8 @@ using namespace yas::observing;
     canceller1->cancel();
 
     XCTAssertEqual(canceller_called.size(), 1);
-    XCTAssertEqual(canceller_called.at(0), 300);
+    XCTAssertNotEqual(canceller_id, 0);
+    XCTAssertEqual(canceller_called.at(0), canceller_id);
 
     auto canceller2 = syncable.end();
 
@@ -79,30 +87,39 @@ using namespace yas::observing;
 
 - (void)test_merge {
     std::vector<bool> handler_called1;
-    std::vector<uint32_t> canceller_called1;
+    std::vector<uintptr_t> canceller_called1;
+    uintptr_t canceller_id_1 = 0;
 
-    observing::syncable syncable1{[&handler_called1, &canceller_called1](bool const sync) {
+    observing::syncable syncable1{[&handler_called1, &canceller_called1, &canceller_id_1](bool const sync) {
         handler_called1.emplace_back(sync);
-        return canceller::make_shared(
-            201, [&canceller_called1](uint32_t const identifier) { canceller_called1.emplace_back(identifier); });
+        auto canceller = canceller::make_shared(
+            [&canceller_called1](uintptr_t const identifier) { canceller_called1.emplace_back(identifier); });
+        canceller_id_1 = canceller->identifier();
+        return canceller;
     }};
 
     std::vector<bool> handler_called2;
-    std::vector<uint32_t> canceller_called2;
+    std::vector<uintptr_t> canceller_called2;
+    uintptr_t canceller_id_2 = 0;
 
-    observing::syncable syncable2{[&handler_called2, &canceller_called2](bool const sync) {
+    observing::syncable syncable2{[&handler_called2, &canceller_called2, &canceller_id_2](bool const sync) {
         handler_called2.emplace_back(sync);
-        return canceller::make_shared(
-            202, [&canceller_called2](uint32_t const identifier) { canceller_called2.emplace_back(identifier); });
+        auto canceller = canceller::make_shared(
+            [&canceller_called2](uintptr_t const identifier) { canceller_called2.emplace_back(identifier); });
+        canceller_id_2 = canceller->identifier();
+        return canceller;
     }};
 
     std::size_t handler_called3 = 0;
-    std::vector<uint32_t> canceller_called3;
+    std::vector<uintptr_t> canceller_called3;
+    uintptr_t canceller_id_3 = 0;
 
-    observing::endable endable{[&handler_called3, &canceller_called3] {
+    observing::endable endable{[&handler_called3, &canceller_called3, &canceller_id_3] {
         handler_called3++;
-        return canceller::make_shared(
-            203, [&canceller_called3](uint32_t const identifier) { canceller_called3.emplace_back(identifier); });
+        auto canceller = canceller::make_shared(
+            [&canceller_called3](uintptr_t const identifier) { canceller_called3.emplace_back(identifier); });
+        canceller_id_3 = canceller->identifier();
+        return canceller;
     }};
 
     syncable1.merge(std::move(syncable2));
@@ -131,30 +148,39 @@ using namespace yas::observing;
     canceller1->cancel();
 
     XCTAssertEqual(canceller_called1.size(), 1);
-    XCTAssertEqual(canceller_called1.at(0), 201);
+    XCTAssertNotEqual(canceller_id_1, 0);
+    XCTAssertEqual(canceller_called1.at(0), canceller_id_1);
     XCTAssertEqual(canceller_called2.size(), 1);
-    XCTAssertEqual(canceller_called2.at(0), 202);
+    XCTAssertNotEqual(canceller_id_2, 0);
+    XCTAssertEqual(canceller_called2.at(0), canceller_id_2);
     XCTAssertEqual(canceller_called3.size(), 1);
-    XCTAssertEqual(canceller_called3.at(0), 203);
+    XCTAssertNotEqual(canceller_id_3, 0);
+    XCTAssertEqual(canceller_called3.at(0), canceller_id_3);
 }
 
 - (void)test_to_endable {
     std::vector<bool> handler_called1;
-    std::vector<uint32_t> canceller_called1;
+    std::vector<uintptr_t> canceller_called1;
+    uintptr_t canceller_id_1 = 0;
 
-    observing::syncable syncable{[&handler_called1, &canceller_called1](bool const sync) {
+    observing::syncable syncable{[&handler_called1, &canceller_called1, &canceller_id_1](bool const sync) {
         handler_called1.emplace_back(sync);
-        return canceller::make_shared(
-            301, [&canceller_called1](uint32_t const identifier) { canceller_called1.emplace_back(identifier); });
+        auto canceller = canceller::make_shared(
+            [&canceller_called1](uintptr_t const identifier) { canceller_called1.emplace_back(identifier); });
+        canceller_id_1 = canceller->identifier();
+        return canceller;
     }};
 
     std::size_t handler_called2 = 0;
-    std::vector<uint32_t> canceller_called2;
+    std::vector<uintptr_t> canceller_called2;
+    uintptr_t canceller_id_2 = 0;
 
-    observing::endable endable{[&handler_called2, &canceller_called2] {
+    observing::endable endable{[&handler_called2, &canceller_called2, &canceller_id_2] {
         handler_called2++;
-        return canceller::make_shared(
-            302, [&canceller_called2](uint32_t const identifier) { canceller_called2.emplace_back(identifier); });
+        auto canceller = canceller::make_shared(
+            [&canceller_called2](uintptr_t const identifier) { canceller_called2.emplace_back(identifier); });
+        canceller_id_2 = canceller->identifier();
+        return canceller;
     }};
 
     syncable.merge(std::move(endable));
@@ -176,9 +202,11 @@ using namespace yas::observing;
     canceller->cancel();
 
     XCTAssertEqual(canceller_called1.size(), 1);
-    XCTAssertEqual(canceller_called1.at(0), 301);
+    XCTAssertNotEqual(canceller_id_1, 0);
+    XCTAssertEqual(canceller_called1.at(0), canceller_id_1);
     XCTAssertEqual(canceller_called2.size(), 1);
-    XCTAssertEqual(canceller_called2.at(0), 302);
+    XCTAssertNotEqual(canceller_id_2, 0);
+    XCTAssertEqual(canceller_called2.at(0), canceller_id_2);
 }
 
 - (void)test_create_empty {
