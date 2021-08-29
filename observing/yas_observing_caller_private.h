@@ -19,6 +19,7 @@ canceller_ptr caller<T>::add(handler_f &&handler) {
     auto canceller = canceller::make_shared([this](uintptr_t const identifier) {
         this->_handlers.at(identifier).enabled = false;
         this->_handlers.erase(identifier);
+        this->_cancellers.erase(identifier);
     });
     auto const identifier = canceller->identifier();
     this->_handlers.emplace(identifier, handler_container{.handler = handler});
