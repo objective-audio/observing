@@ -33,7 +33,7 @@ struct caller {
     };
 
     std::map<uintptr_t, handler_container> _handlers;
-    std::vector<canceller_wptr> _cancellers;
+    std::map<uintptr_t, canceller_wptr> _cancellers;
     bool _calling = false;
 
     caller() {
