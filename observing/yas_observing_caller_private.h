@@ -8,7 +8,7 @@ namespace yas::observing {
 template <typename T>
 caller<T>::~caller() {
     for (auto const &canceller : this->_cancellers) {
-        if (auto shared = canceller.lock()) {
+        if (auto shared = canceller.second.lock()) {
             shared->ignore();
         }
     }
@@ -16,11 +16,14 @@ caller<T>::~caller() {
 
 template <typename T>
 canceller_ptr caller<T>::add(handler_f &&handler) {
-    this->_handlers.emplace(this->_next_idx, handler_container{.handler = handler});
-    auto canceller = canceller::make_shared(this->_next_idx,
-                                            [this](uint32_t const idx) { this->_handlers.at(idx).enabled = false; });
-    this->_cancellers.emplace_back(canceller);
-    ++this->_next_idx;
+    auto canceller = canceller::make_shared([this](uintptr_t const identifier) {
+        this->_handlers.at(identifier).enabled = false;
+        this->_handlers.erase(identifier);
+        this->_cancellers.erase(identifier);
+    });
+    auto const identifier = canceller->identifier();
+    this->_handlers.emplace(identifier, handler_container{.handler = handler});
+    this->_cancellers.emplace(identifier, canceller);
     return canceller;
 }
 

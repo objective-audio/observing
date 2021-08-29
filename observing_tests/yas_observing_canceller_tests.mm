@@ -16,14 +16,12 @@ using namespace yas::observing;
 @implementation yas_observing_canceller_tests
 
 - (void)test_destructor {
-    std::vector<uint32_t> called;
+    std::vector<uintptr_t> called;
 
     {
-        auto remover = [&called](uint32_t const identifier) { called.emplace_back(identifier); };
+        auto remover = [&called](uintptr_t const identifier) { called.emplace_back(identifier); };
 
-        auto const canceller = canceller::make_shared(1, std::move(remover));
-
-        XCTAssertEqual(canceller->identifier, 1);
+        auto const canceller = canceller::make_shared(std::move(remover));
 
         XCTAssertEqual(called.size(), 0);
     }
@@ -32,12 +30,12 @@ using namespace yas::observing;
 }
 
 - (void)test_cancel {
-    std::vector<uint32_t> called;
+    std::vector<uintptr_t> called;
 
     {
-        auto remover = [&called](uint32_t const identifier) { called.emplace_back(identifier); };
+        auto remover = [&called](uintptr_t const identifier) { called.emplace_back(identifier); };
 
-        auto const canceller = canceller::make_shared(1, std::move(remover));
+        auto const canceller = canceller::make_shared(std::move(remover));
 
         canceller->cancel();
 
@@ -48,12 +46,12 @@ using namespace yas::observing;
 }
 
 - (void)test_ignore {
-    std::vector<uint32_t> called;
+    std::vector<uintptr_t> called;
 
     {
-        auto remover = [&called](uint32_t const identifier) { called.emplace_back(identifier); };
+        auto remover = [&called](uintptr_t const identifier) { called.emplace_back(identifier); };
 
-        auto const canceller = canceller::make_shared(1, std::move(remover));
+        auto const canceller = canceller::make_shared(std::move(remover));
 
         canceller->ignore();
 
@@ -64,14 +62,14 @@ using namespace yas::observing;
 }
 
 - (void)test_set_to {
-    std::vector<uint32_t> called;
+    std::vector<uintptr_t> called;
 
     {
         cancellable_ptr canceller = nullptr;
         {
-            auto remover = [&called](uint32_t const identifier) { called.emplace_back(identifier); };
+            auto remover = [&called](uintptr_t const identifier) { called.emplace_back(identifier); };
 
-            canceller::make_shared(1, std::move(remover))->set_to(canceller);
+            canceller::make_shared(std::move(remover))->set_to(canceller);
 
             XCTAssertEqual(called.size(), 0);
         }
@@ -81,13 +79,19 @@ using namespace yas::observing;
 }
 
 - (void)test_has_cancellable {
-    auto const canceller = canceller::make_shared(1, [](uint32_t const identifier) {});
+    auto const canceller = canceller::make_shared([](uintptr_t const identifier) {});
 
     XCTAssertTrue(canceller->has_cancellable());
 
     canceller->cancel();
 
     XCTAssertFalse(canceller->has_cancellable());
+}
+
+- (void)test_identifier {
+    auto const canceller = canceller::make_shared([](uintptr_t const identifier) {});
+
+    XCTAssertEqual(canceller->identifier(), reinterpret_cast<uintptr_t>(canceller.get()));
 }
 
 @end

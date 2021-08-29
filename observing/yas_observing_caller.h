@@ -32,9 +32,8 @@ struct caller {
         handler_f handler;
     };
 
-    uint32_t _next_idx = 0;
-    std::map<uint32_t, handler_container> _handlers;
-    std::vector<canceller_wptr> _cancellers;
+    std::map<uintptr_t, handler_container> _handlers;
+    std::map<uintptr_t, canceller_wptr> _cancellers;
     bool _calling = false;
 
     caller() {
