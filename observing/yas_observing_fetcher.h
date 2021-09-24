@@ -26,7 +26,7 @@ struct fetcher final {
 
    private:
     std::function<std::optional<T>(void)> _fetching_handler;
-    caller_ptr<T> const _caller = caller<T>::make_shared();
+    caller_ptr<T> _caller = nullptr;
 
     explicit fetcher(std::function<std::optional<T>(void)> &&);
 };

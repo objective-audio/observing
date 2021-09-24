@@ -17,19 +17,25 @@ std::optional<T> fetcher<T>::fetched_value() const {
 template <typename T>
 void fetcher<T>::push() {
     if (auto const fetched = this->fetched_value(); fetched.has_value()) {
-        auto caller = this->_caller;
-        caller->call(fetched.value());
+        if (auto const &caller = this->_caller) {
+            caller->call(fetched.value());
+        }
     }
 }
 
 template <typename T>
 void fetcher<T>::push(T const &value) {
-    auto caller = this->_caller;
-    caller->call(value);
+    if (auto const &caller = this->_caller) {
+        caller->call(value);
+    }
 }
 
 template <typename T>
 syncable fetcher<T>::observe(typename caller<T>::handler_f &&handler) {
+    if (!this->_caller) {
+        this->_caller = caller<T>::make_shared();
+    }
+
     return syncable{[this, handler = std::move(handler)](bool const sync) mutable {
         if (sync) {
             if (auto const fetched = this->fetched_value(); fetched.has_value()) {
