@@ -13,8 +13,9 @@ template <typename T>
 void holder<T>::set_value(T &&value) {
     if (this->_value != value) {
         this->_value = std::move(value);
-        auto caller = this->_caller;
-        caller->call(this->_value);
+        if (auto const &caller = this->_caller) {
+            caller->call(this->_value);
+        }
     }
 }
 
@@ -33,6 +34,10 @@ T const &holder<T>::value() const {
 
 template <typename T>
 syncable holder<T>::observe(typename caller<T>::handler_f &&handler) {
+    if (!this->_caller) {
+        this->_caller = caller<T>::make_shared();
+    }
+
     return syncable{[this, handler = std::move(handler)](bool const sync) mutable {
         if (sync) {
             handler(this->_value);

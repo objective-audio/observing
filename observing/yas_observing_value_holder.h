@@ -27,7 +27,7 @@ struct holder final {
 
    private:
     T _value;
-    caller_ptr<T> const _caller = caller<T>::make_shared();
+    caller_ptr<T> _caller = nullptr;
 
     holder(T &&);
 };
