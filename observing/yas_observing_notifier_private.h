@@ -11,18 +11,23 @@ notifier<T>::notifier() {
 
 template <typename T>
 void notifier<T>::notify(T const &value) {
-    auto caller = this->_caller;
-    caller->call(value);
+    if (auto const &caller = this->_caller) {
+        caller->call(value);
+    }
 }
 
 template <typename T>
 void notifier<T>::notify() {
-    auto caller = this->_caller;
-    caller->call(nullptr);
+    if (auto const &caller = this->_caller) {
+        caller->call(nullptr);
+    }
 }
 
 template <typename T>
 endable notifier<T>::observe(typename caller<T>::handler_f &&handler) {
+    if (!this->_caller) {
+        this->_caller = caller<T>::make_shared();
+    }
     return endable{[canceller = this->_caller->add(std::move(handler))] { return canceller; }};
 }
 
