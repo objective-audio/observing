@@ -60,4 +60,10 @@ using namespace yas::observing;
     XCTAssertEqual(called, 2);
 }
 
+- (void)test_notify_no_observing {
+    auto const notifier = observing::notifier<std::nullptr_t>::make_shared();
+
+    notifier->notify(nullptr);
+}
+
 @end
