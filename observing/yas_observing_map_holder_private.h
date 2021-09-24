@@ -88,6 +88,10 @@ void holder<Key, Element>::clear() {
 
 template <typename Key, typename Element>
 syncable holder<Key, Element>::observe(typename caller<event>::handler_f &&handler) {
+    if (!this->_caller) {
+        this->_caller = caller<event>::make_shared();
+    }
+
     return syncable{[this, handler = std::move(handler)](bool const sync) mutable {
         if (sync) {
             handler(event{.type = event_type::any, .elements = this->_raw});
@@ -113,30 +117,34 @@ holder_ptr<Key, Element> holder<Key, Element>::make_shared(std::map<Key, Element
 
 template <typename Key, typename Element>
 void holder<Key, Element>::_call_any() {
-    auto caller = this->_caller;
-    caller->call(event{.type = event_type::any, .elements = this->_raw});
+    if (auto const &caller = this->_caller) {
+        caller->call(event{.type = event_type::any, .elements = this->_raw});
+    }
 }
 
 template <typename Key, typename Element>
 void holder<Key, Element>::_call_replaced(Element const *erased, std::optional<Key> const &key) {
-    auto caller = this->_caller;
-    caller->call(event{.type = event_type::replaced,
-                       .elements = this->_raw,
-                       .inserted = &this->_raw.at(*key),
-                       .erased = erased,
-                       .key = key});
+    if (auto const &caller = this->_caller) {
+        caller->call(event{.type = event_type::replaced,
+                           .elements = this->_raw,
+                           .inserted = &this->_raw.at(*key),
+                           .erased = erased,
+                           .key = key});
+    }
 }
 
 template <typename Key, typename Element>
 void holder<Key, Element>::_call_inserted(std::optional<Key> const &key) {
-    auto caller = this->_caller;
-    caller->call(
-        event{.type = event_type::inserted, .elements = this->_raw, .inserted = &this->_raw.at(*key), .key = key});
+    if (auto const &caller = this->_caller) {
+        caller->call(
+            event{.type = event_type::inserted, .elements = this->_raw, .inserted = &this->_raw.at(*key), .key = key});
+    }
 }
 
 template <typename Key, typename Element>
 void holder<Key, Element>::_call_erased(Element const *erased, std::optional<Key> const &key) {
-    auto caller = this->_caller;
-    caller->call(event{.type = event_type::erased, .elements = this->_raw, .erased = erased, .key = key});
+    if (auto const &caller = this->_caller) {
+        caller->call(event{.type = event_type::erased, .elements = this->_raw, .erased = erased, .key = key});
+    }
 }
 }  // namespace yas::observing::map
