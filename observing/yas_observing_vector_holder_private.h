@@ -107,6 +107,10 @@ void holder<T>::clear() {
 
 template <typename T>
 syncable holder<T>::observe(typename caller<event>::handler_f &&handler) {
+    if (!this->_caller) {
+        this->_caller = caller<event>::make_shared();
+    }
+
     return syncable{[this, handler = std::move(handler)](bool const sync) mutable {
         if (sync) {
             handler(event{.type = event_type::any, .elements = this->_raw});
@@ -117,31 +121,35 @@ syncable holder<T>::observe(typename caller<event>::handler_f &&handler) {
 
 template <typename T>
 void holder<T>::_call_any() {
-    auto caller = this->_caller;
-    caller->call(event{.type = event_type::any, .elements = this->_raw});
+    if (auto const &caller = this->_caller) {
+        caller->call(event{.type = event_type::any, .elements = this->_raw});
+    }
 }
 
 template <typename T>
 void holder<T>::_call_replaced(T const *erased, std::size_t const idx) {
-    auto caller = this->_caller;
-    caller->call(event{.type = event_type::replaced,
-                       .elements = this->_raw,
-                       .inserted = &this->_raw.at(idx),
-                       .erased = erased,
-                       .index = idx});
+    if (auto const &caller = this->_caller) {
+        caller->call(event{.type = event_type::replaced,
+                           .elements = this->_raw,
+                           .inserted = &this->_raw.at(idx),
+                           .erased = erased,
+                           .index = idx});
+    }
 }
 
 template <typename T>
 void holder<T>::_call_inserted(std::size_t const idx) {
-    auto caller = this->_caller;
-    caller->call(
-        event{.type = event_type::inserted, .elements = this->_raw, .inserted = &this->_raw.at(idx), .index = idx});
+    if (auto const &caller = this->_caller) {
+        caller->call(
+            event{.type = event_type::inserted, .elements = this->_raw, .inserted = &this->_raw.at(idx), .index = idx});
+    }
 }
 
 template <typename T>
 void holder<T>::_call_erased(T const *erased, std::size_t const idx) {
-    auto caller = this->_caller;
-    caller->call(event{.type = event_type::erased, .elements = this->_raw, .erased = erased, .index = idx});
+    if (auto const &caller = this->_caller) {
+        caller->call(event{.type = event_type::erased, .elements = this->_raw, .erased = erased, .index = idx});
+    }
 }
 
 template <typename T>
