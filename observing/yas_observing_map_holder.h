@@ -51,7 +51,7 @@ struct holder final {
 
    private:
     std::map<Key, Element> _raw;
-    caller_ptr<event> const _caller = caller<event>::make_shared();
+    caller_ptr<event> _caller = nullptr;
 
     holder(std::map<Key, Element> const &);
     holder(std::map<Key, Element> &&);

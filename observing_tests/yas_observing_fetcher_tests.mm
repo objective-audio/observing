@@ -64,4 +64,10 @@ using namespace yas::observing;
     XCTAssertEqual(called2.at(2), 2);
 }
 
+- (void)test_push_no_observing {
+    auto const fetcher = observing::fetcher<int>::make_shared([] { return 1; });
+
+    fetcher->push(2);
+}
+
 @end
