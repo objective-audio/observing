@@ -35,7 +35,7 @@ cancellable_ptr endable::end() {
         this->_handlers.clear();
         return canceller;
     } else {
-        return nullptr;
+        return empty_canceller::make_shared();
     }
 }
 

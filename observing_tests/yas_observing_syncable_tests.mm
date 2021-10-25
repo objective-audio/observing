@@ -46,8 +46,11 @@ using namespace yas::observing;
     auto canceller2 = syncable.sync();
 
     XCTAssertEqual(handler_called.size(), 1);
+    XCTAssertTrue(canceller2);
+
+    canceller2->cancel();
+
     XCTAssertEqual(canceller_called.size(), 1);
-    XCTAssertFalse(canceller2);
 }
 
 - (void)test_end {
@@ -81,8 +84,11 @@ using namespace yas::observing;
     auto canceller2 = syncable.end();
 
     XCTAssertEqual(handler_called.size(), 1);
+    XCTAssertTrue(canceller2);
+
+    canceller2->cancel();
+
     XCTAssertEqual(canceller_called.size(), 1);
-    XCTAssertFalse(canceller2);
 }
 
 - (void)test_merge {
@@ -124,14 +130,20 @@ using namespace yas::observing;
 
     syncable1.merge(std::move(syncable2));
 
-    XCTAssertFalse(syncable2.end());
+    auto empty_canceller1 = syncable2.end();
+    XCTAssertTrue(empty_canceller1);
+
+    empty_canceller1->cancel();
 
     XCTAssertEqual(handler_called2.size(), 0);
     XCTAssertEqual(canceller_called2.size(), 0);
 
     syncable1.merge(std::move(endable));
 
-    XCTAssertFalse(endable.end());
+    auto empty_canceller2 = endable.end();
+    XCTAssertTrue(empty_canceller2);
+
+    empty_canceller2->cancel();
 
     XCTAssertEqual(handler_called3, 0);
     XCTAssertEqual(canceller_called3.size(), 0);
@@ -187,7 +199,8 @@ using namespace yas::observing;
 
     auto dst_endable = syncable.to_endable();
 
-    XCTAssertFalse(syncable.sync());
+    auto empty_canceller = syncable.sync();
+    XCTAssertTrue(empty_canceller);
     XCTAssertEqual(handler_called1.size(), 0);
     XCTAssertEqual(handler_called2, 0);
 
@@ -214,7 +227,9 @@ using namespace yas::observing;
 
     auto canceller = syncable.sync();
 
-    XCTAssertEqual(canceller, nullptr);
+    XCTAssertTrue(canceller);
+
+    canceller->cancel();
 }
 
 - (void)test_create_null {
@@ -222,7 +237,17 @@ using namespace yas::observing;
 
     auto canceller = syncable.sync();
 
-    XCTAssertEqual(canceller, nullptr);
+    XCTAssertTrue(canceller);
+
+    canceller->cancel();
+}
+
+- (void)test_empty_canceller {
+    observing::syncable syncable;
+
+    auto canceller = syncable.sync();
+
+    canceller->cancel();
 }
 
 @end
