@@ -45,8 +45,12 @@ using namespace yas::observing;
 
     auto canceller2 = endable.end();
 
+    XCTAssertEqual(handler_called, 1);
+    XCTAssertTrue(canceller2);
+
+    canceller2->cancel();
+
     XCTAssertEqual(canceller_called.size(), 1);
-    XCTAssertFalse(canceller2);
 }
 
 - (void)test_create_empty {
@@ -54,7 +58,9 @@ using namespace yas::observing;
 
     auto canceller = endable.end();
 
-    XCTAssertEqual(canceller, nullptr);
+    XCTAssertTrue(canceller);
+
+    canceller->cancel();
 }
 
 - (void)test_create_null {
@@ -62,7 +68,9 @@ using namespace yas::observing;
 
     auto canceller = endable.end();
 
-    XCTAssertEqual(canceller, nullptr);
+    XCTAssertTrue(canceller);
+
+    canceller->cancel();
 }
 
 - (void)test_merge {
@@ -92,7 +100,10 @@ using namespace yas::observing;
 
     endable1.merge(std::move(endable2));
 
-    XCTAssertFalse(endable2.end());
+    auto empty_canceller = endable2.end();
+    XCTAssertTrue(empty_canceller);
+
+    empty_canceller->cancel();
 
     XCTAssertEqual(handler_called_2, 0);
     XCTAssertEqual(canceller_called_2.size(), 0);

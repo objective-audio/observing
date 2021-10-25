@@ -86,6 +86,6 @@ cancellable_ptr syncable::_call_handlers(bool const sync) {
             throw std::runtime_error("unreachable");
         }
     } else {
-        return nullptr;
+        return empty_canceller::make_shared();
     }
 }
