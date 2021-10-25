@@ -9,6 +9,8 @@
 using namespace yas;
 using namespace yas::observing;
 
+#pragma mark - canceller
+
 canceller::canceller(remover_f &&handler) : _handler(std::move(handler)) {
 }
 
@@ -49,4 +51,26 @@ std::shared_ptr<canceller> canceller::make_shared(remover_f &&handler) {
     auto shared = canceller_ptr(new canceller{std::move(handler)});
     shared->_weak_canceller = shared;
     return shared;
+}
+
+#pragma mark - empty_canceller
+
+std::shared_ptr<empty_canceller> empty_canceller::make_shared() {
+    return std::shared_ptr<empty_canceller>(new empty_canceller{});
+}
+
+empty_canceller::empty_canceller() {
+}
+
+void empty_canceller::cancel() {
+}
+
+bool empty_canceller::has_cancellable() const {
+    return false;
+}
+
+void empty_canceller::add_to(canceller_pool &) {
+}
+
+void empty_canceller::set_to(cancellable_ptr &) {
 }
