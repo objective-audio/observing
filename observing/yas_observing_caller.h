@@ -32,12 +32,15 @@ struct caller {
         handler_f handler;
     };
 
-    std::map<uintptr_t, handler_container> _handlers;
-    std::map<uintptr_t, canceller_wptr> _cancellers;
-    bool _calling = false;
+    struct member {
+        std::map<uintptr_t, handler_container> handlers;
+        std::map<uintptr_t, canceller_wptr> cancellers;
+        bool calling = false;
+    };
 
-    caller() {
-    }
+    std::shared_ptr<member> const _member;
+
+    caller();
 };
 }  // namespace yas::observing
 

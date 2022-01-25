@@ -6,8 +6,13 @@
 
 namespace yas::observing {
 template <typename T>
+caller<T>::caller() : _member(std::make_shared<member>()) {
+}
+
+template <typename T>
 caller<T>::~caller() {
-    for (auto const &canceller : this->_cancellers) {
+    auto const member = this->_member;
+    for (auto const &canceller : member->cancellers) {
         if (auto shared = canceller.second.lock()) {
             shared->ignore();
         }
@@ -17,24 +22,28 @@ caller<T>::~caller() {
 template <typename T>
 canceller_ptr caller<T>::add(handler_f &&handler) {
     auto canceller = canceller::make_shared([this](uintptr_t const identifier) {
-        this->_handlers.at(identifier).enabled = false;
-        if (!this->_calling) {
-            this->_handlers.erase(identifier);
+        auto const member = this->_member;
+
+        member->handlers.at(identifier).enabled = false;
+        if (!member->calling) {
+            member->handlers.erase(identifier);
         }
-        this->_cancellers.erase(identifier);
+        member->cancellers.erase(identifier);
     });
     auto const identifier = canceller->identifier();
-    this->_handlers.emplace(identifier, handler_container{.handler = handler});
-    this->_cancellers.emplace(identifier, canceller);
+    this->_member->handlers.emplace(identifier, handler_container{.handler = handler});
+    this->_member->cancellers.emplace(identifier, canceller);
     return canceller;
 }
 
 template <typename T>
 void caller<T>::call(T const &value) {
-    if (!this->_calling) {
-        this->_calling = true;
+    auto const member = this->_member;
+
+    if (!member->calling) {
+        member->calling = true;
         std::vector<uintptr_t> removed;
-        for (auto const &pair : this->_handlers) {
+        for (auto const &pair : member->handlers) {
             if (pair.second.enabled) {
                 pair.second.handler(value);
             }
@@ -44,9 +53,9 @@ void caller<T>::call(T const &value) {
             }
         }
         for (auto const &identifier : removed) {
-            this->_handlers.erase(identifier);
+            member->handlers.erase(identifier);
         }
-        this->_calling = false;
+        member->calling = false;
     }
 }
 

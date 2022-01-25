@@ -129,10 +129,8 @@ using namespace yas::observing;
 
     auto canceller = holder->caller->add([&holder](int const &value) { holder->caller = nullptr; });
 
-    // callしている間保持していればクラッシュしない
-    auto caller = holder->caller;
+    // callしている間にcallerを破棄してもクラッシュしない
     holder->caller->call(0);
-    caller = nullptr;
 
     canceller->cancel();
 }
