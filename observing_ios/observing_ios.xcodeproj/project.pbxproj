@@ -19,7 +19,7 @@
 		B693472925EB711500B40CA7 /* yas_observing_value_holder_private.h in Headers */ = {isa = PBXBuildFile; fileRef = B693471725EB711500B40CA7 /* yas_observing_value_holder_private.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B693472A25EB711500B40CA7 /* yas_observing_fetcher_private.h in Headers */ = {isa = PBXBuildFile; fileRef = B693471825EB711500B40CA7 /* yas_observing_fetcher_private.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B693472B25EB711500B40CA7 /* yas_observing_canceller_pool.h in Headers */ = {isa = PBXBuildFile; fileRef = B693471925EB711500B40CA7 /* yas_observing_canceller_pool.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B693472C25EB711500B40CA7 /* yas_observing_umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = B693471A25EB711500B40CA7 /* yas_observing_umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B693472C25EB711500B40CA7 /* yas_observing_umbrella.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B693471A25EB711500B40CA7 /* yas_observing_umbrella.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		B693472D25EB711500B40CA7 /* yas_observing_cancellable.h in Headers */ = {isa = PBXBuildFile; fileRef = B693471B25EB711500B40CA7 /* yas_observing_cancellable.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B693472E25EB711500B40CA7 /* yas_observing_map_holder.h in Headers */ = {isa = PBXBuildFile; fileRef = B693471C25EB711500B40CA7 /* yas_observing_map_holder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B693472F25EB711500B40CA7 /* yas_observing_canceller_pool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B693471D25EB711500B40CA7 /* yas_observing_canceller_pool.cpp */; };
@@ -48,7 +48,7 @@
 		B693471725EB711500B40CA7 /* yas_observing_value_holder_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yas_observing_value_holder_private.h; sourceTree = "<group>"; };
 		B693471825EB711500B40CA7 /* yas_observing_fetcher_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yas_observing_fetcher_private.h; sourceTree = "<group>"; };
 		B693471925EB711500B40CA7 /* yas_observing_canceller_pool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yas_observing_canceller_pool.h; sourceTree = "<group>"; };
-		B693471A25EB711500B40CA7 /* yas_observing_umbrella.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yas_observing_umbrella.h; sourceTree = "<group>"; };
+		B693471A25EB711500B40CA7 /* yas_observing_umbrella.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = yas_observing_umbrella.hpp; sourceTree = "<group>"; };
 		B693471B25EB711500B40CA7 /* yas_observing_cancellable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yas_observing_cancellable.h; sourceTree = "<group>"; };
 		B693471C25EB711500B40CA7 /* yas_observing_map_holder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yas_observing_map_holder.h; sourceTree = "<group>"; };
 		B693471D25EB711500B40CA7 /* yas_observing_canceller_pool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = yas_observing_canceller_pool.cpp; sourceTree = "<group>"; };
@@ -121,7 +121,7 @@
 				B693471625EB711500B40CA7 /* yas_observing_notifier.h */,
 				B6BB65592610845B003FB755 /* yas_observing_syncable.cpp */,
 				B6BB655A2610845B003FB755 /* yas_observing_syncable.h */,
-				B693471A25EB711500B40CA7 /* yas_observing_umbrella.h */,
+				B693471A25EB711500B40CA7 /* yas_observing_umbrella.hpp */,
 				B693471725EB711500B40CA7 /* yas_observing_value_holder_private.h */,
 				B693471325EB711500B40CA7 /* yas_observing_value_holder.h */,
 				B693471F25EB711500B40CA7 /* yas_observing_vector_holder_private.h */,
@@ -150,7 +150,7 @@
 				B693472B25EB711500B40CA7 /* yas_observing_canceller_pool.h in Headers */,
 				B693472925EB711500B40CA7 /* yas_observing_value_holder_private.h in Headers */,
 				B693472A25EB711500B40CA7 /* yas_observing_fetcher_private.h in Headers */,
-				B693472C25EB711500B40CA7 /* yas_observing_umbrella.h in Headers */,
+				B693472C25EB711500B40CA7 /* yas_observing_umbrella.hpp in Headers */,
 				B693472125EB711500B40CA7 /* yas_observing_canceller.h in Headers */,
 				B693473025EB711500B40CA7 /* yas_observing_fetcher.h in Headers */,
 				B693472625EB711500B40CA7 /* yas_observing_caller_private.h in Headers */,
