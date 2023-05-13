@@ -3,8 +3,7 @@
 //
 
 #import <XCTest/XCTest.h>
-#import <observing/observing.h>
-#import <memory>
+#import <observing/yas_observing_umbrella.h>
 
 using namespace yas;
 using namespace yas::observing;
