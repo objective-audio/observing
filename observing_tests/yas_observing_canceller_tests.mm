@@ -3,7 +3,7 @@
 //
 
 #import <XCTest/XCTest.h>
-#import <observing/yas_observing_umbrella.h>
+#import <observing/yas_observing_umbrella.hpp>
 #import <vector>
 
 using namespace yas;
