@@ -4,6 +4,8 @@
 
 #include "yas_observing_canceller_pool.h"
 
+#include <cassert>
+
 using namespace yas;
 using namespace yas::observing;
 
