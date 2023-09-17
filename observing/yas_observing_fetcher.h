@@ -21,6 +21,7 @@ struct fetcher final {
     void push(T const &value);
 
     [[nodiscard]] syncable observe(typename caller<T>::handler_f &&);
+    [[nodiscard]] syncable observe(std::size_t const order, typename caller<T>::handler_f &&);
 
     [[nodiscard]] static fetcher_ptr<T> make_shared(std::function<std::optional<T>(void)>);
 

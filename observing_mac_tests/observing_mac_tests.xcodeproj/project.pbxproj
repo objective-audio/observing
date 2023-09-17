@@ -19,6 +19,7 @@
 		B65A93E225EB9D4C001A899B /* yas_observing_invalidator_pool_tests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B65A93DA25EB9D4C001A899B /* yas_observing_invalidator_pool_tests.mm */; };
 		B65A93E725EB9D8B001A899B /* cpp_utils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B65A93E625EB9D8B001A899B /* cpp_utils.framework */; };
 		B6E139CF2618665200E7B416 /* yas_observing_endable_tests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6E139CE2618665200E7B416 /* yas_observing_endable_tests.mm */; };
+		B6E93CB22AB5829100AD5C50 /* yas_observing_caller_index_tests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6E93CB12AB5829100AD5C50 /* yas_observing_caller_index_tests.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		B65A93DA25EB9D4C001A899B /* yas_observing_invalidator_pool_tests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = yas_observing_invalidator_pool_tests.mm; sourceTree = "<group>"; };
 		B65A93E625EB9D8B001A899B /* cpp_utils.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = cpp_utils.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6E139CE2618665200E7B416 /* yas_observing_endable_tests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = yas_observing_endable_tests.mm; sourceTree = "<group>"; };
+		B6E93CB12AB5829100AD5C50 /* yas_observing_caller_index_tests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = yas_observing_caller_index_tests.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				B65A93D325EB9D4C001A899B /* yas_observing_caller_tests.mm */,
+				B6E93CB12AB5829100AD5C50 /* yas_observing_caller_index_tests.mm */,
 				B65A93D425EB9D4C001A899B /* yas_observing_canceller_tests.mm */,
 				B65A93D725EB9D4C001A899B /* yas_observing_fetcher_tests.mm */,
 				B65A93DA25EB9D4C001A899B /* yas_observing_invalidator_pool_tests.mm */,
@@ -192,6 +195,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6E93CB22AB5829100AD5C50 /* yas_observing_caller_index_tests.mm in Sources */,
 				B65A93E125EB9D4C001A899B /* yas_observing_value_holder_tests.mm in Sources */,
 				B6E139CF2618665200E7B416 /* yas_observing_endable_tests.mm in Sources */,
 				B65A93E225EB9D4C001A899B /* yas_observing_invalidator_pool_tests.mm in Sources */,

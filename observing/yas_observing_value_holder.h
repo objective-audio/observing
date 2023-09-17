@@ -21,6 +21,7 @@ struct holder final {
     [[nodiscard]] T const &value() const;
 
     [[nodiscard]] syncable observe(typename caller<T>::handler_f &&);
+    [[nodiscard]] syncable observe(std::size_t const order, typename caller<T>::handler_f &&);
 
     [[nodiscard]] static holder_ptr<T> make_shared(T const &);
     [[nodiscard]] static holder_ptr<T> make_shared(T &&);

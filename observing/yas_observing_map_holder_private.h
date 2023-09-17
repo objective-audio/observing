@@ -88,15 +88,20 @@ void holder<Key, Element>::clear() {
 
 template <typename Key, typename Element>
 syncable holder<Key, Element>::observe(typename caller<event>::handler_f &&handler) {
+    return this->observe(0, std::move(handler));
+}
+
+template <typename Key, typename Element>
+syncable holder<Key, Element>::observe(std::size_t const order, typename caller<event>::handler_f &&handler) {
     if (!this->_caller) {
         this->_caller = caller<event>::make_shared();
     }
 
-    return syncable{[this, handler = std::move(handler)](bool const sync) mutable {
+    return syncable{[this, order, handler = std::move(handler)](bool const sync) mutable {
         if (sync) {
             handler(event{.type = event_type::any, .elements = this->_raw});
         }
-        return this->_caller->add(std::move(handler));
+        return this->_caller->add(order, std::move(handler));
     }};
 }
 

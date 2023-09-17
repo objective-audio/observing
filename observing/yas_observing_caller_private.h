@@ -21,17 +21,24 @@ caller<T>::~caller() {
 
 template <typename T>
 canceller_ptr caller<T>::add(handler_f &&handler) {
-    auto canceller = canceller::make_shared([this](uintptr_t const identifier) {
+    return this->add(0, std::move(handler));
+}
+
+template <typename T>
+canceller_ptr caller<T>::add(std::size_t const order, handler_f &&handler) {
+    auto canceller = canceller::make_shared([this, order](uintptr_t const identifier) {
         auto const member = this->_member;
 
-        member->handlers.at(identifier).enabled = false;
+        caller_index const index{.identifier = identifier, .order = order};
+        member->handlers.at(index).enabled = false;
         if (!member->calling) {
-            member->handlers.erase(identifier);
+            member->handlers.erase(index);
         }
         member->cancellers.erase(identifier);
     });
     auto const identifier = canceller->identifier();
-    this->_member->handlers.emplace(identifier, handler_container{.handler = handler});
+    caller_index const index{.identifier = identifier, .order = order};
+    this->_member->handlers.emplace(index, handler_container{.handler = handler});
     this->_member->cancellers.emplace(identifier, canceller);
     return canceller;
 }
@@ -42,7 +49,7 @@ void caller<T>::call(T const &value) {
 
     if (!member->calling) {
         member->calling = true;
-        std::vector<uintptr_t> removed;
+        std::vector<caller_index> removed;
         for (auto const &pair : member->handlers) {
             if (pair.second.enabled) {
                 pair.second.handler(value);
@@ -52,8 +59,8 @@ void caller<T>::call(T const &value) {
                 removed.emplace_back(pair.first);
             }
         }
-        for (auto const &identifier : removed) {
-            member->handlers.erase(identifier);
+        for (auto const &index : removed) {
+            member->handlers.erase(index);
         }
         member->calling = false;
     }

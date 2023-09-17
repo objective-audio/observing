@@ -30,6 +30,8 @@
 		B6BB655C2610845B003FB755 /* yas_observing_syncable.h in Headers */ = {isa = PBXBuildFile; fileRef = B6BB655A2610845B003FB755 /* yas_observing_syncable.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B6E139D8261879BE00E7B416 /* yas_observing_endable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6E139D6261879BE00E7B416 /* yas_observing_endable.cpp */; };
 		B6E139D9261879BE00E7B416 /* yas_observing_endable.h in Headers */ = {isa = PBXBuildFile; fileRef = B6E139D7261879BE00E7B416 /* yas_observing_endable.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B6E93CB72AB584F100AD5C50 /* yas_observing_caller_index.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B6E93CB52AB584F100AD5C50 /* yas_observing_caller_index.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		B6E93CB82AB584F100AD5C50 /* yas_observing_caller_index.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6E93CB62AB584F100AD5C50 /* yas_observing_caller_index.cpp */; };
 		B6EF9C3326197CE2000FC8F2 /* cpp_utils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6EF9C3226197CE2000FC8F2 /* cpp_utils.framework */; };
 /* End PBXBuildFile section */
 
@@ -59,6 +61,8 @@
 		B6BB655A2610845B003FB755 /* yas_observing_syncable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yas_observing_syncable.h; sourceTree = "<group>"; };
 		B6E139D6261879BE00E7B416 /* yas_observing_endable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = yas_observing_endable.cpp; sourceTree = "<group>"; };
 		B6E139D7261879BE00E7B416 /* yas_observing_endable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yas_observing_endable.h; sourceTree = "<group>"; };
+		B6E93CB52AB584F100AD5C50 /* yas_observing_caller_index.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = yas_observing_caller_index.hpp; sourceTree = "<group>"; };
+		B6E93CB62AB584F100AD5C50 /* yas_observing_caller_index.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = yas_observing_caller_index.cpp; sourceTree = "<group>"; };
 		B6EF9C3226197CE2000FC8F2 /* cpp_utils.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = cpp_utils.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -104,6 +108,8 @@
 		B693470E25EB711500B40CA7 /* observing */ = {
 			isa = PBXGroup;
 			children = (
+				B6E93CB62AB584F100AD5C50 /* yas_observing_caller_index.cpp */,
+				B6E93CB52AB584F100AD5C50 /* yas_observing_caller_index.hpp */,
 				B693471425EB711500B40CA7 /* yas_observing_caller_private.h */,
 				B693471025EB711500B40CA7 /* yas_observing_caller.h */,
 				B693471B25EB711500B40CA7 /* yas_observing_cancellable.h */,
@@ -146,6 +152,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6E93CB72AB584F100AD5C50 /* yas_observing_caller_index.hpp in Headers */,
 				B693472825EB711500B40CA7 /* yas_observing_notifier.h in Headers */,
 				B693472B25EB711500B40CA7 /* yas_observing_canceller_pool.h in Headers */,
 				B693472925EB711500B40CA7 /* yas_observing_value_holder_private.h in Headers */,
@@ -235,6 +242,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6E93CB82AB584F100AD5C50 /* yas_observing_caller_index.cpp in Sources */,
 				B693472F25EB711500B40CA7 /* yas_observing_canceller_pool.cpp in Sources */,
 				B6BB655B2610845B003FB755 /* yas_observing_syncable.cpp in Sources */,
 				B693472425EB711500B40CA7 /* yas_observing_canceller.cpp in Sources */,

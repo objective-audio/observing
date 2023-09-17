@@ -7,6 +7,7 @@
 #include <observing/yas_observing_canceller.h>
 
 #include <map>
+#include <observing/yas_observing_caller_index.hpp>
 #include <vector>
 
 namespace yas::observing {
@@ -22,6 +23,7 @@ struct caller {
     ~caller();
 
     [[nodiscard]] canceller_ptr add(handler_f &&);
+    [[nodiscard]] canceller_ptr add(std::size_t const order, handler_f &&);
     void call(T const &);
 
     static caller_ptr<T> make_shared();
@@ -33,7 +35,7 @@ struct caller {
     };
 
     struct member {
-        std::map<uintptr_t, handler_container> handlers;
+        std::map<caller_index, handler_container> handlers;
         std::map<uintptr_t, canceller_wptr> cancellers;
         bool calling = false;
     };

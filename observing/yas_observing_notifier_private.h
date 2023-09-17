@@ -25,10 +25,18 @@ void notifier<T>::notify() {
 
 template <typename T>
 endable notifier<T>::observe(typename caller<T>::handler_f &&handler) {
+    return this->observe(0, std::move(handler));
+}
+
+template <typename T>
+endable notifier<T>::observe(std::size_t const order, typename caller<T>::handler_f &&handler) {
     if (!this->_caller) {
         this->_caller = caller<T>::make_shared();
     }
-    return endable{[canceller = this->_caller->add(std::move(handler))] { return canceller; }};
+
+    return endable{[this, order, handler = std::move(handler)]() mutable {
+        return this->_caller->add(order, std::move(handler));
+    }};
 }
 
 template <typename T>

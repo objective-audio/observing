@@ -49,6 +49,7 @@ struct holder final {
     void clear();
 
     [[nodiscard]] syncable observe(typename caller<event>::handler_f &&);
+    [[nodiscard]] syncable observe(std::size_t const order, typename caller<event>::handler_f &&);
 
     [[nodiscard]] static holder_ptr<T> make_shared();
     [[nodiscard]] static holder_ptr<T> make_shared(std::vector<T> &&);

@@ -34,15 +34,20 @@ T const &holder<T>::value() const {
 
 template <typename T>
 syncable holder<T>::observe(typename caller<T>::handler_f &&handler) {
+    return this->observe(0, std::move(handler));
+}
+
+template <typename T>
+syncable holder<T>::observe(std::size_t const order, typename caller<T>::handler_f &&handler) {
     if (!this->_caller) {
         this->_caller = caller<T>::make_shared();
     }
 
-    return syncable{[this, handler = std::move(handler)](bool const sync) mutable {
+    return syncable{[this, order, handler = std::move(handler)](bool const sync) mutable {
         if (sync) {
             handler(this->_value);
         }
-        return this->_caller->add(std::move(handler));
+        return this->_caller->add(order, std::move(handler));
     }};
 }
 

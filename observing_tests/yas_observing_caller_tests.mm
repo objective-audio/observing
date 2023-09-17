@@ -42,6 +42,59 @@ using namespace yas::observing;
     XCTAssertEqual(called2.at(1), 2);
 }
 
+- (void)test_call_with_order {
+    auto caller = observing::caller<int>::make_shared();
+
+    enum class called_order : std::size_t {
+        first,
+        second,
+        third,
+    };
+
+    struct called_element {
+        called_order order;
+        int value;
+
+        bool operator==(called_element const &rhs) const {
+            return this->order == rhs.order && this->value == rhs.value;
+        }
+    };
+
+    std::vector<called_element> called;
+    observing::canceller_pool pool;
+
+    caller
+        ->add(static_cast<int>(called_order::third),
+              [&called](int const &value) {
+                  called.emplace_back(called_element{.order = called_order::third, .value = value});
+              })
+        ->add_to(pool);
+    caller
+        ->add(static_cast<int>(called_order::second),
+              [&called](int const &value) {
+                  called.emplace_back(called_element{.order = called_order::second, .value = value});
+              })
+        ->add_to(pool);
+    caller
+        ->add(static_cast<int>(called_order::first),
+              [&called](int const &value) {
+                  called.emplace_back(called_element{.order = called_order::first, .value = value});
+              })
+        ->add_to(pool);
+
+    XCTAssertEqual(called.size(), 0);
+
+    caller->call(1);
+
+    XCTAssertEqual(called.size(), 3);
+
+    XCTAssertEqual(called.at(0), (called_element{.order = called_order::first, .value = 1}));
+    XCTAssertEqual(called.at(1), (called_element{.order = called_order::second, .value = 1}));
+    XCTAssertEqual(called.at(2), (called_element{.order = called_order::third, .value = 1}));
+
+    pool.cancel();
+}
+
 - (void)test_ignore {
     auto caller = observing::caller<int>::make_shared();
 
