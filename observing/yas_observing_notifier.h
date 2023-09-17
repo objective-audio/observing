@@ -19,6 +19,7 @@ struct notifier final {
     void notify();
 
     [[nodiscard]] endable observe(typename caller<T>::handler_f &&);
+    [[nodiscard]] endable observe(std::size_t const order, typename caller<T>::handler_f &&);
 
     [[nodiscard]] static notifier_ptr<T> make_shared();
 

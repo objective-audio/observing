@@ -32,17 +32,22 @@ void fetcher<T>::push(T const &value) {
 
 template <typename T>
 syncable fetcher<T>::observe(typename caller<T>::handler_f &&handler) {
+    return this->observe(0, std::move(handler));
+}
+
+template <typename T>
+syncable fetcher<T>::observe(std::size_t const order, typename caller<T>::handler_f &&handler) {
     if (!this->_caller) {
         this->_caller = caller<T>::make_shared();
     }
 
-    return syncable{[this, handler = std::move(handler)](bool const sync) mutable {
+    return syncable{[this, order, handler = std::move(handler)](bool const sync) mutable {
         if (sync) {
             if (auto const fetched = this->fetched_value(); fetched.has_value()) {
                 handler(fetched.value());
             }
         }
-        return this->_caller->add(std::move(handler));
+        return this->_caller->add(order, std::move(handler));
     }};
 }
 
