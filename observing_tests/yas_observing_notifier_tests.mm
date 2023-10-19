@@ -42,6 +42,51 @@ using namespace yas::observing;
     XCTAssertEqual(called2.at(1), 2);
 }
 
+- (void)test_observe_with_order {
+    auto const notifier = observing::notifier<int>::make_shared();
+
+    enum class called_order : std::size_t {
+        first,
+        second,
+    };
+
+    struct called_element {
+        called_order order;
+        int value;
+
+        bool operator==(called_element const &rhs) const {
+            return this->order == rhs.order && this->value == rhs.value;
+        }
+    };
+
+    std::vector<called_element> called;
+    observing::canceller_pool pool;
+
+    notifier
+        ->observe(static_cast<int>(called_order::second),
+                  [&called](int const &value) {
+                      called.emplace_back(called_element{.order = called_order::second, .value = value});
+                  })
+        .end()
+        ->add_to(pool);
+
+    notifier
+        ->observe(static_cast<int>(called_order::first),
+                  [&called](int const &value) {
+                      called.emplace_back(called_element{.order = called_order::first, .value = value});
+                  })
+        .end()
+        ->add_to(pool);
+
+    notifier->notify(20);
+
+    XCTAssertEqual(called.size(), 2);
+    XCTAssertEqual(called.at(0), (called_element{.order = called_order::first, .value = 20}));
+    XCTAssertEqual(called.at(1), (called_element{.order = called_order::second, .value = 20}));
+
+    pool.cancel();
+}
+
 - (void)test_notify_null {
     auto const notifier = observing::notifier<std::nullptr_t>::make_shared();
 

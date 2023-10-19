@@ -86,4 +86,55 @@ using namespace yas::observing;
     XCTAssertEqual(called.at(0), 201);
 }
 
+- (void)test_observe_with_order {
+    auto const holder = value::holder<int>::make_shared(300);
+
+    enum class called_order : std::size_t {
+        first,
+        second,
+    };
+
+    struct called_element {
+        called_order order;
+        int value;
+
+        bool operator==(called_element const &rhs) const {
+            return this->order == rhs.order && this->value == rhs.value;
+        }
+    };
+
+    std::vector<called_element> called;
+    observing::canceller_pool pool;
+
+    holder
+        ->observe(static_cast<int>(called_order::second),
+                  [&called](int const &value) {
+                      called.emplace_back(called_element{.order = called_order::second, .value = value});
+                  })
+        .sync()
+        ->add_to(pool);
+
+    XCTAssertEqual(called.size(), 1);
+    XCTAssertEqual(called.at(0), (called_element{.order = called_order::second, .value = 300}));
+
+    holder
+        ->observe(static_cast<int>(called_order::first),
+                  [&called](int const &value) {
+                      called.emplace_back(called_element{.order = called_order::first, .value = value});
+                  })
+        .sync()
+        ->add_to(pool);
+
+    XCTAssertEqual(called.size(), 2);
+    XCTAssertEqual(called.at(1), (called_element{.order = called_order::first, .value = 300}));
+
+    holder->set_value(301);
+
+    XCTAssertEqual(called.size(), 4);
+    XCTAssertEqual(called.at(2), (called_element{.order = called_order::first, .value = 301}));
+    XCTAssertEqual(called.at(3), (called_element{.order = called_order::second, .value = 301}));
+
+    pool.cancel();
+}
+
 @end
