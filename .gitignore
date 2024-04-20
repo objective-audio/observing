@@ -15,3 +15,8 @@ DerivedData
 *.ipa
 *.xcuserstate
 .DS_Store
+/.build
+/Packages
+.swiftpm/configuration/registries.json
+.swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
+.netrc
